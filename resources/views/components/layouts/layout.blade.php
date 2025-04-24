@@ -11,7 +11,7 @@
 <body class="flex flex-col min-h-screen h-65v">
 <x-layouts.header />
 <x-layouts.nav />
-<main>
+<main class="h-65v flex items-center justify-center">
     {{$slot}}
 </main>
 <x-layouts.footer />

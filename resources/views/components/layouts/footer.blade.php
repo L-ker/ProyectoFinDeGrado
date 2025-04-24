@@ -1,4 +1,4 @@
-<footer class="h-10v footer bg-black text-neutral-content items-center p-4 flex justify-between">
+<footer class="h-15v footer bg-black text-neutral-content items-center p-4 flex justify-between">
     <!-- Copyright a la izquierda -->
     <aside class="flex items-center">
         <svg width="36" height="36" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" class="fill-current">
