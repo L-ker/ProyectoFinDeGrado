@@ -21,8 +21,8 @@
                 </svg>
             </button>
 
-            <!-- Barra de volumen (invisible hasta que el hover esté activado) -->
-            <div id="volume-slider-container" class="hidden absolute bottom-[50px] right-0 w-40 bg-gray-700 p-2 rounded-lg mt-2">
+            <!-- Barra de volumen (ahora se abre hacia la izquierda para evitar salirse) -->
+            <div id="volume-slider-container" class="hidden absolute bottom-[50px] right-0 translate-x-full w-40 bg-gray-700 p-2 rounded-lg mt-2">
                 <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="1" class="w-full h-2 bg-gray-300 rounded-full" />
             </div>
         </div>
@@ -39,22 +39,19 @@
     // Función para alternar mute y desmute en el audio
     function toggleMute() {
         var audio = document.getElementById('background-music');
-        var icon = document.getElementById('volume-icon');
         var volumePath = document.getElementById('volume-path');
         var volumeSliderContainer = document.getElementById('volume-slider-container');
-        var volumeSlider = document.getElementById('volume-slider');
 
-        // Alternar el estado de mute
         audio.muted = !audio.muted;
 
         // Cambiar el icono según el estado de mute
         if (audio.muted) {
             volumePath.setAttribute("d", "M6 18L18 6M6 6l12 12"); // X
         } else {
-            volumePath.setAttribute("d", "M3 9v6l6 3V6l-6 3zM15 12c0-2.21 1.79-4 4-4s4 1.79 4 4"); // Altavoz con ondas
+            volumePath.setAttribute("d", "M3 9v6l6 3V6l-6 3zM15 12c0-2.21 1.79-4 4-4s4 1.79 4 4"); // Altavoz
         }
 
-        // Mostrar u ocultar la barra de volumen cuando no está muteado
+        // Mostrar u ocultar la barra de volumen
         if (!audio.muted) {
             volumeSliderContainer.classList.remove('hidden');
         } else {
@@ -62,39 +59,42 @@
         }
     }
 
-    // Función para cambiar el volumen del audio según el slider
-    document.getElementById('volume-slider').addEventListener('input', function() {
-        var audio = document.getElementById('background-music');
-        audio.volume = this.value;
+    document.getElementById('volume-slider').addEventListener('input', function () {
+        document.getElementById('background-music').volume = this.value;
     });
 
-    // Mostrar la barra de volumen cuando el ratón pase por encima del botón
-    document.getElementById('mute-button').addEventListener('mouseenter', function() {
+    document.getElementById('mute-button').addEventListener('mouseenter', function () {
         var audio = document.getElementById('background-music');
-        var volumeSliderContainer = document.getElementById('volume-slider-container');
         if (!audio.muted) {
-            volumeSliderContainer.classList.remove('hidden');
+            document.getElementById('volume-slider-container').classList.remove('hidden');
         }
     });
 
-    // Mostrar la barra de volumen cuando el ratón esté sobre ella
-    document.getElementById('volume-slider-container').addEventListener('mouseenter', function() {
+    document.getElementById('volume-slider-container').addEventListener('mouseenter', function () {
         this.classList.remove('hidden');
     });
 
-    // Mantener la barra de volumen visible mientras interactúas con ella
-    document.getElementById('volume-slider-container').addEventListener('mouseleave', function() {
+    document.getElementById('volume-slider-container').addEventListener('mouseleave', function () {
         this.classList.add('hidden');
     });
 
-    // Ocultar la barra de volumen cuando el ratón salga del contenedor completo
-    document.querySelector('.absolute.bottom-4.right-4').addEventListener('mouseleave', function() {
-        var volumeSliderContainer = document.getElementById('volume-slider-container');
-        setTimeout(function() {
-            // Solo ocultar si el ratón no está sobre el control de volumen
-            if (!volumeSliderContainer.matches(':hover')) {
-                volumeSliderContainer.classList.add('hidden');
+    document.querySelector('.absolute.bottom-4.right-4').addEventListener('mouseleave', function () {
+        var container = document.getElementById('volume-slider-container');
+        setTimeout(function () {
+            if (!container.matches(':hover')) {
+                container.classList.add('hidden');
             }
         }, 200);
+    });
+
+    // Intenta reproducir el audio automáticamente o tras clic si está bloqueado
+    window.addEventListener('DOMContentLoaded', function () {
+        const audio = document.getElementById('background-music');
+        audio.play().catch(() => {
+            document.addEventListener('click', function playOnClick() {
+                audio.play().catch(err => console.warn("Error al reproducir audio tras clic:", err));
+                document.removeEventListener('click', playOnClick);
+            });
+        });
     });
 </script>
