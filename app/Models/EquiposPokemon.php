@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class equipoPokemon extends Model
+class EquiposPokemon extends Model
 {
     public $fillable=["idPokemon1","idPokemon2","idPokemon3","idPokemon4","idPokemon5","idPokemon6"];
 

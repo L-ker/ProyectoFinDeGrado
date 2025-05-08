@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('calendario', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('torneo')
+            ->constrained("torneos") 
+            ->onUpdate('cascade')
+            ->onDelete("cascade");
+            $table->string("fecha");
+            $table->string("fecha_fin_inscripcion");
             $table->timestamps();
         });
     }

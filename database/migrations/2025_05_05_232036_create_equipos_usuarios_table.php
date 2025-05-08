@@ -13,6 +13,14 @@ return new class extends Migration
     {
         Schema::create('equipos_usuarios', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('idUsuario')
+            ->constrained("users") 
+            ->onUpdate('cascade')
+            ->onDelete("cascade");
+            $table->foreignId('idEquipo')
+            ->constrained("equipo_pokemon") 
+            ->onUpdate('cascade')
+            ->onDelete("cascade");
             $table->timestamps();
         });
     }

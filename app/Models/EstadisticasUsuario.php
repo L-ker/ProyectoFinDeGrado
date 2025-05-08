@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class estadisticas extends Model
+class EstadisticasUsuario extends Model
 {
     // PENSANDO IDEAS
     // public $fillable=["nombre","usuario","email","password"];

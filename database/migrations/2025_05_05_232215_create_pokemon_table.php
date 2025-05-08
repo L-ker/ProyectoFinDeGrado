@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('pokemon', function (Blueprint $table) {
             $table->id();
+            $table->string("nombre");
+            $table->string("terastallization");
+            $table->string("objeto");
+            $table->string("movimiento1");
+            $table->string("movimiento2");
+            $table->string("movimiento3");
+            $table->string("movimiento4");
             $table->timestamps();
         });
     }

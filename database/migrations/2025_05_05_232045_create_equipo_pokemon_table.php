@@ -13,6 +13,33 @@ return new class extends Migration
     {
         Schema::create('equipo_pokemon', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('idPokemon1')
+            ->constrained("pokemon") 
+            ->onUpdate('cascade')
+            ->onDelete("cascade");
+            $table->foreignId('idPokemon2')
+            ->constrained("pokemon") 
+            ->onUpdate('cascade')
+            ->onDelete("cascade");
+            $table->timestamps();
+            $table->foreignId('idPokemon3')
+            ->constrained("pokemon") 
+            ->onUpdate('cascade')
+            ->onDelete("cascade");
+            $table->foreignId('idPokemon4')
+            ->constrained("pokemon") 
+            ->onUpdate('cascade')
+            ->onDelete("cascade");
+            $table->timestamps();
+            $table->foreignId('idPokemon5')
+            ->constrained("pokemon") 
+            ->onUpdate('cascade')
+            ->onDelete("cascade");
+            $table->foreignId('idPokemon6')
+            ->constrained("pokemon") 
+            ->onUpdate('cascade')
+            ->onDelete("cascade");
+            $table->timestamps();
             $table->timestamps();
         });
     }

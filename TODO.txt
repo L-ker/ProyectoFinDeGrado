@@ -1,0 +1,2 @@
+Crear request personalizados para el manejo de errores y para poder avanzar bien con los controladores
+Comparar nuevamente cada modelo con su migracion para asegurar que son identicos

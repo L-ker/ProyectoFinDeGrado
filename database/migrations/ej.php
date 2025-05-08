@@ -19,6 +19,15 @@ return new class extends Migration
             $table->string('password');
             $table->timestamps();
         });
+        // Schema::create('puntuaciones', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->integer('puntuacion');
+        //     $table->foreignId('usuarios_id')
+        //     ->constrained("usuarios") 
+        //     ->onUpdate('cascade')
+        //     ->onDelete("cascade");
+        //     $table->timestamps();
+        // });
     }
 
     /**
