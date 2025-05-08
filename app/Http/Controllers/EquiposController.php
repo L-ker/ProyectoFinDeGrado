@@ -3,15 +3,41 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Auth;
 
 class EquiposController extends Controller
 {
+    function getPokemonIdFromUrl($url){
+        return (int) rtrim(substr($url, strrpos(rtrim($url, '/'), '/') + 1), '/');
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        // $equipos = $usuario->equiposPokemon()->with('pokemons')->get(); // ajusta según tu relación
+        $pokemonResponse = Http::get('https://pokeapi.co/api/v2/pokedex/paldea');
+        $pokemonList = collect($pokemonResponse->json('pokemon_entries'))
+            ->map(fn ($entry) => [
+                'name' => ucfirst($entry['pokemon_species']['name']),
+                'url' => "https://pokeapi.co/api/v2/pokemon/" . strtolower($entry['pokemon_species']['name']),
+                'sprite' => "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" .
+                            getPokemonIdFromUrl($entry['pokemon_species']['url']) . ".png",
+            ]);
+
+        $itemResponse = Http::get('https://pokeapi.co/api/v2/item?limit=1000');
+        $itemList = collect($itemResponse->json('results'))
+            ->map(fn ($item) => [
+                'name' => ucfirst($item['name']),
+                'url' => $item['url'],
+            ]);
+
+        return view('teamBuild', [
+            // 'equipos' => $equipos,
+            'pokemonList' => $pokemonList,
+            'itemList' => $itemList,
+        ]);
     }
 
     /**
