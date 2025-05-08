@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -21,6 +20,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'es_organizador',   // Nuevo campo
+        'es_administrador', // Nuevo campo
     ];
 
     /**
@@ -43,6 +44,9 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            // Los campos booleanos no necesitan casting especial, pero si quieres ser explícito puedes añadirlos:
+            'es_organizador' => 'boolean',
+            'es_administrador' => 'boolean',
         ];
     }
 }

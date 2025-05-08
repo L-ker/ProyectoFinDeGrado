@@ -13,4 +13,9 @@ class ej extends Model
     public function puntuaciones(){
         return $this->hasMany(Puntuaciones::class);
     }
+    // use HasFactory;
+    // public $fillable=["puntuacion", 'usuarios_id'];
+    // public function usuario(){
+    //     return $this->belongsTo(Usuarios::class, 'usuarios_id');
+    // }
 }
