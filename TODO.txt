@@ -1,2 +1,3 @@
 Crear request personalizados para el manejo de errores y para poder avanzar bien con los controladores
 Comparar nuevamente cada modelo con su migracion para asegurar que son identicos
+Login y register tiene que ser un menu popup no una pagina separada, quedará mucho mejor ademas de que puedo rehusar ese codigo para muchas cosas del calendario

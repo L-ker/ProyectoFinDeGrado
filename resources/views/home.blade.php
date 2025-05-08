@@ -1,3 +1,4 @@
+@guest
 <x-layouts.layout>
     <!-- Contenedor para el gif y la capa negra -->
     <div class="relative w-full h-[75vh]">
@@ -96,3 +97,6 @@
         });
     });
 </script>
+@endguest
+@auth
+@endauth
