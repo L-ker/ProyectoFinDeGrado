@@ -98,5 +98,9 @@
     });
 </script>
 @endguest
+
 @auth
+<x-layouts.layout>
+    
+</x-layouts.layout>
 @endauth

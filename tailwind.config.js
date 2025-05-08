@@ -23,17 +23,30 @@ export default {
                 "15v":"15vh",
                 "10v":"10vh",
             },
+            width: {
+                "20v":"20vh",
+                "65v":"65vh",
+                "70v":"70vh",
+                "75v":"75vh",
+                "80v":"80vh",
+                "15v":"15vh",
+                "10v":"10vh",
+                "175v":"175vh",
+                "200v":"200vh",
+            },
             colors: {
                 "neutral1":"#edf2f4",
                 "neutral2":"#8d99ae",
                 "rojoClaro":"#ef233c",
                 "rojoOscuro":"#d90429",
-                "acentuar1":"#f48c06",
+                "acentuar1":"#FE8361",
                 "acentuar2":"#e85d04",
                 "gris":"#2b2d42",
             },
         },
     },
-
-    plugins: [forms],
+    plugins: [
+        require('tailwind-scrollbar-hide'),
+        forms
+      ],
 };

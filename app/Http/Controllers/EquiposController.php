@@ -8,15 +8,16 @@ use Illuminate\Support\Facades\Auth;
 
 class EquiposController extends Controller
 {
-    function getPokemonIdFromUrl($url){
-        return (int) rtrim(substr($url, strrpos(rtrim($url, '/'), '/') + 1), '/');
-    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        // $equipos = $usuario->equiposPokemon()->with('pokemons')->get(); // ajusta según tu relación
+        function getPokemonIdFromUrl($url){
+            return (int) rtrim(substr($url, strrpos(rtrim($url, '/'), '/') + 1), '/');
+        }
+        
+        $equipos = auth()->user()->equiposPokemon;
         $pokemonResponse = Http::get('https://pokeapi.co/api/v2/pokedex/paldea');
         $pokemonList = collect($pokemonResponse->json('pokemon_entries'))
             ->map(fn ($entry) => [
@@ -34,11 +35,13 @@ class EquiposController extends Controller
             ]);
 
         return view('teamBuild', [
-            // 'equipos' => $equipos,
+            'equipos' => $equipos,
             'pokemonList' => $pokemonList,
             'itemList' => $itemList,
         ]);
+        
     }
+    
 
     /**
      * Show the form for creating a new resource.
