@@ -21,13 +21,24 @@
     <p>Más contenido</p>
     <p>Más contenido</p>
     <p>Más contenido</p>
-    <p>Más contenido</p>
-    <p>Más contenido</p>
     <p>Más contenido</p> <p>Primer párrafo</p>
     <p>Segundo párrafo</p>
         <h1 class="text-7xl font-bold">EQUIPOS</h1>
-        <div class="w-175v h-10v rounded-xl bg-white overflow-y-auto p-2 shadow-md text-black scrollbar-hide">
-        <p>Segundo párrafo</p>
+        <div class="w-175v rounded-xl bg-white p-4 shadow-md text-black scrollbar-hide flex flex-col space-y-4">
+        <a class="w-fit bg-white text-black font-semibold py-2 px-4 rounded-lg shadow hover:bg-blue-700 transition duration-200" href="">Crear equipo</a>
+        <div equipo="test">
+            <p>Más contenido</p>
+        </div>
+        <p>Más contenido</p>
+        <p>Más contenido</p>
+        <p>Más contenido</p>
+        <p>Más contenido</p>
+        <p>Más contenido</p>
+        <p>Más contenido</p>
+        <p>Más contenido</p>
+        <p>Más contenido</p>
+        <p>Más contenido</p>
+        <p>Más contenido</p>
         </div>
     </div>
 </x-layouts.layout>
