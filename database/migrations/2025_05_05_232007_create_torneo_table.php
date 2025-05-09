@@ -13,6 +13,18 @@ return new class extends Migration
     {
         Schema::create('torneos', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('organizador')
+            ->constrained("users") 
+            ->onUpdate('cascade')
+            ->onDelete("cascade");
+            $table->string("modalidad");
+            $table->boolean("activo");
+            $table->foreignId('ganador');
+            ->constrained("users");
+            ->onUpdate('cascade');
+            ->onDelete("cascade")
+            ->nullable()
+            ->default(null);
             $table->timestamps();
         });
     }
