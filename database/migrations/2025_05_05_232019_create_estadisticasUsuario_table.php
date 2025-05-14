@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('estadisticas', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('organizador')
+            ->constrained("users") 
+            ->onUpdate('cascade')
+            ->onDelete("cascade");
+            $table->int("torneosGanados");
             $table->timestamps();
         });
     }
