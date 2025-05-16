@@ -16,3 +16,69 @@ https://chatgpt.com/c/681102d5-6fbc-8005-9294-96d9cd6cc66a
 
 bracket torneo:
 https://chatgpt.com/c/681cc462-1488-8005-973b-54a9c50b187c
+
+Caso de uso TOTAL para planear todo ya:
+Administrador inicia sesion y hace organizador a un usuario
+(
+    back{
+        crear una variable de sesion con el rol del usuario en http controllers auth quizas 
+        auth()->user()->es_organizador
+        auth()->user()->es_administrador
+    }
+)
+(index de usuarios, que tenga un boton para hacerlos organizadores con comprobación extra)
+Organizador inicia sesion y crea un torneo en un dia
+(
+    view{
+        pagina de calendario y formulario
+    }
+    back{
+        controlador de torneos
+        controlador de calendario
+    }
+)
+Usuarios crean sus equipos pokemon
+(
+    view{
+        conectar back con front
+    }
+)
+Usuarios se inscriben al torneo 
+(
+    back {
+        controlador de inscripciones
+    }
+)
+Organizador entra al torneo por si acaso
+(
+    view {
+        pagina torneo
+    }
+    back {
+        scripts de los brackets
+    }
+)
+Usuarios entran al torneo para jugar
+(
+    view{
+        tema teamsheets del rival y eso
+    }
+    back {
+        metodos internos del torneo
+        conexiones con showdown
+        bot para las salas
+    }
+)
+Juegan el torneo
+Jugador gana
+Organizador lo declara ganador
+Jugador mira estadisticas
+(
+    view{
+        pagina estadisticas
+    }
+    back{
+        controlador estadisticas
+    }
+)
+Jugador ve que ha ganado en sus estadisticas
