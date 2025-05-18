@@ -101,6 +101,25 @@
 
 @auth
 <x-layouts.layout>
+    <!-- <div class="w-200v h-65v border border-black overflow-y-auto p-2 shadow-md text-acentuar1 scrollbar-hide flex flex-col items-center justify-start space-y-4">
+        <div class="w-200v text-rojoClaro flex flex-col items-center justify-start text-5xl">
+            <h1>Calendario</h1>
+        </div>
+        <div class="w-200v h-70v border border-black bg-white p-4 shadow-md text-black scrollbar-hide flex flex-col space-y-4">
+        </div>
+    </div> -->
+    <div class="container w-200v border border-black h-65v flex flex-col items-center justify-start">
+        <div class="grid" style="display: grid; height: 100%; width: 100%; grid-template-columns: repeat(4, 1fr); grid-template-rows: 0.4fr 1fr 1fr 1fr; gap: 16px; background-color: #eee; padding: 8px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25), 0 1px 2px rgba(0, 0, 0, 0.1);">
+    <!-- Div con el titulo y boton -->
+      <div class="flex flex-col items-center justify-start" style="grid-column: span 4; grid-row: span 1;">
+        <h1 class="text-rojoClaro text-5xl">Calendario</h1>
+      </div>
+    <!-- Div con dias -->
+      <div class="flex flex-col bg-rojoClaro items-center justify-start" style="grid-column: span 4; grid-row: span 3;display: flex; align-items: center; justify-content: center;">
+        <p>Broccoli</p>
+      </div>
     
+    </div>
+  </div>
 </x-layouts.layout>
 @endauth
