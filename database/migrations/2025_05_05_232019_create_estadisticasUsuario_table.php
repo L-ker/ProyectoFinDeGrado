@@ -17,7 +17,7 @@ return new class extends Migration
             ->constrained("users") 
             ->onUpdate('cascade')
             ->onDelete("cascade");
-            $table->int("torneosGanados");
+            $table->integer("torneosGanados");
             $table->timestamps();
         });
     }

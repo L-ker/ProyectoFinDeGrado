@@ -1,10 +1,21 @@
 <header class="hidden md:flex h-15v bg-rojoClaro flex flex-row justify-between px-3 py-1 items-center">
     <img class="w-28 md:w-36 lg:w-44 max-h-[90%] h-auto" src="{{ asset('images/logo.png') }}" alt="{{__('logo')}}">
+    <img class="w-28 md:w-36 lg:w-44 max-h-[90%] h-auto" src="{{ asset('images/corona.png') }}" alt="{{__('logo')}}">
     <div>
         @auth
             <div class="flex items-center gap-4">
                 <span class="bg-white text-black font-semibold py-2 px-4 rounded-lg shadow">
-                    {{ __("Usuario") }}: {{ auth()->user()->name }}
+                    Usuario: {{ auth()->user()->name }}
+                </span>
+                <span class="bg-white text-black font-semibold py-2 px-4 rounded-lg shadow">
+                    rol: 
+                    @if(auth()->user()->es_administrador)
+                        administrador
+                    @elseif(auth()->user()->es_organizador)
+                        organizador
+                    @else
+                        usuario
+                    @endif
                 </span>
     
                 <form action="{{ route('logout') }}" method="POST">

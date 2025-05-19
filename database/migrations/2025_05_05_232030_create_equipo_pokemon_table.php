@@ -21,7 +21,6 @@ return new class extends Migration
             ->constrained("pokemon") 
             ->onUpdate('cascade')
             ->onDelete("cascade");
-            $table->timestamps();
             $table->foreignId('idPokemon3')
             ->constrained("pokemon") 
             ->onUpdate('cascade')
@@ -30,7 +29,6 @@ return new class extends Migration
             ->constrained("pokemon") 
             ->onUpdate('cascade')
             ->onDelete("cascade");
-            $table->timestamps();
             $table->foreignId('idPokemon5')
             ->constrained("pokemon") 
             ->onUpdate('cascade')
@@ -39,7 +37,6 @@ return new class extends Migration
             ->constrained("pokemon") 
             ->onUpdate('cascade')
             ->onDelete("cascade");
-            $table->timestamps();
             $table->timestamps();
         });
     }

@@ -12,12 +12,25 @@ class EquiposController extends Controller
      * Display a listing of the resource.
      */
     public function index()
+    {    
+        $equipos = auth()->user()?->equiposPokemon ?? collect(); 
+
+        return view('equipos.index', [
+            'equipos' => $equipos,
+        ]);
+        
+    }
+    
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
     {
         function getPokemonIdFromUrl($url){
             return (int) rtrim(substr($url, strrpos(rtrim($url, '/'), '/') + 1), '/');
         }
         
-        $equipos = auth()->user()->equiposPokemon;
         $pokemonResponse = Http::get('https://pokeapi.co/api/v2/pokedex/paldea');
         $pokemonList = collect($pokemonResponse->json('pokemon_entries'))
             ->map(fn ($entry) => [
@@ -34,21 +47,10 @@ class EquiposController extends Controller
                 'url' => $item['url'],
             ]);
 
-        return view('teamBuild', [
-            'equipos' => $equipos,
+        return view('equipos.create', [
             'pokemonList' => $pokemonList,
             'itemList' => $itemList,
         ]);
-        
-    }
-    
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
     }
 
     /**
