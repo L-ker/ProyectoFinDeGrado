@@ -1,7 +1,3 @@
-Crear request personalizados para el manejo de errores y para poder avanzar bien con los controladores
-Comparar nuevamente cada modelo con su migracion para asegurar que son identicos
-Login y register tiene que ser un menu popup no una pagina separada, quedará mucho mejor ademas de que puedo rehusar ese codigo para muchas cosas del calendario
-
 conectar con showdown:
 https://chatgpt.com/c/681b91e5-4490-8005-b1fb-b7a03e726f3d
 
@@ -16,6 +12,8 @@ https://chatgpt.com/c/681102d5-6fbc-8005-9294-96d9cd6cc66a
 
 bracket torneo:
 https://chatgpt.com/c/681cc462-1488-8005-973b-54a9c50b187c
+
+- middleware isAdminOrOrganizer
 
 Caso de uso TOTAL para planear todo ya:
 Administrador inicia sesion y hace organizador a un usuario
