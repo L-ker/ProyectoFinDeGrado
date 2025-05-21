@@ -2,4 +2,4 @@
 return [
     'VGC',
     'Compra equipo'
-]
+];

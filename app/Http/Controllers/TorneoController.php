@@ -20,7 +20,7 @@ class TorneoController extends Controller
      */
     public function create()
     {
-        return view("torneo.create");
+        return view("torneos.create");
     }
 
     /**
@@ -39,6 +39,7 @@ class TorneoController extends Controller
         // session()->flash("mensaje",__('El usuario') .' '. $usuario->nombre .''. __('ha sido registrado'));
 
         // return redirect()->route('home');
+        return view("home");
     }
 
     /**
