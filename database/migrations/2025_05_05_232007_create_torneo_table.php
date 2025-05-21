@@ -21,11 +21,10 @@ return new class extends Migration
             $table->string("nombre");
             $table->boolean("activo")->default(true);
             $table->foreignId('ganador')
+            ->nullable()
             ->constrained("users")
             ->onUpdate('cascade')
-            ->onDelete("cascade")
-            ->nullable()
-            ->default(null);
+            ->onDelete("cascade");
             $table->timestamps();
         });
     }

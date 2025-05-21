@@ -8,14 +8,10 @@ use App\Models\Calendario;
 
 class TorneoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        abort(404);
     }
-
     /**
      * Show the form for creating a new resource.
      */
@@ -28,18 +24,18 @@ class TorneoController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        $torneo = Torneos::create([
+{
+    $torneo = Torneos::create([
         'organizador' => $request->organizador_id,
         'modalidad' => $request->modalidad,
         'nombre' => $request->nombre,
-        ]);
+    ]);
 
-        return redirect()->route('calendarios.store', [
-        'torneo_id' => $torneo->id,
-        'fecha' => $fechaFormateada,
-        ]);
-    }
+    Calendario::crearConFecha($torneo->id, $request->fecha);
+
+    return redirect()->route('home');
+}
+
 
     /**
      * Display the specified resource.

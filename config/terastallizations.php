@@ -1,0 +1,21 @@
+<?php
+return [
+    'acero',
+    'agua',
+    'bicho',
+    'dragón',
+    'eléctrico',
+    'fantasma',
+    'fuego',
+    'hada',
+    'hielo',
+    'lucha',
+    'normal',
+    'planta',
+    'psíquico',
+    'roca',
+    'siniestro',
+    'tierra',
+    'veneno',
+    'volador',
+];

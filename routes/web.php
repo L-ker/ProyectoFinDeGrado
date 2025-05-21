@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EquiposController;
+use App\Http\Controllers\CalendarioController;
 use App\Http\Controllers\TorneoController;
 use Illuminate\Support\Facades\Route;
 
@@ -10,6 +11,9 @@ Route::get('/', [CalendarioController::class, 'home'])->name('home');
 
 
 Route::resource("equipos", EquiposController::class)
+->middleware('auth');
+
+Route::resource("calendarios", CalendarioController::class)
 ->middleware('auth');
 
 Route::resource("torneos", TorneoController::class)

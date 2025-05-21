@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 
 use Illuminate\Http\Request;
+use App\Models\Calendario;
 
 class CalendarioController extends Controller
 {
@@ -23,24 +24,12 @@ class CalendarioController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        $fechaOriginal = $request->fecha; // dd/mm/yyyy
-        $torneoId = $request->torneo;
+{
+    Calendario::crearConFecha($request->torneo, $request->fecha);
+    return view('home');
+}
 
-        [$dia, $mes, $anio] = explode('/', $fechaOriginal);
 
-        $timestamp = mktime(0, 0, 0, $mes, $dia, $anio);
-
-        $fechaFinInscripcion = date('d/m/Y', $timestampInscripcion);
-
-        Calendario::create([
-        'torneo' => $torneoId,
-        'fecha' => $fechaOriginal,
-        'fecha_fin_inscripcion' => $fechaFinInscripcion,
-        ]);
-
-        return view('home');
-    }
 
     /**
      * Display the specified resource.

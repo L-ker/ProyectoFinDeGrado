@@ -109,7 +109,7 @@
                 
                 <h1 class="text-rojoClaro text-5xl text-center flex-grow">Calendario</h1>
                 @if(auth()->check() && (auth()->user()->es_organizador || auth()->user()->es_administrador))
-                    <button class="bg-rojoClaro text-white px-4 py-2 rounded shadow hover:bg-red-700 transition">Acción</button>
+                    <a href="{{ route('torneos.create' )}}"><button class="bg-rojoClaro text-white px-4 py-2 rounded shadow hover:bg-red-700 transition">Crear torneo</button></a>
                 @endif
             </div>
 
