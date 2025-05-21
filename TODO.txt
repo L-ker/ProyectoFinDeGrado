@@ -13,18 +13,18 @@ https://chatgpt.com/c/681102d5-6fbc-8005-9294-96d9cd6cc66a
 bracket torneo:
 https://chatgpt.com/c/681cc462-1488-8005-973b-54a9c50b187c
 
-- middleware isAdminOrOrganizer
+TODO:
+- middleware isAdminOrOrganizer para las paginas de torneos y eso
+- controlador usuarios y index
+- 1. controlar usuarios si eres admin
+- 2. relacion controladores torneos-calendario y vista del calendario en el home
+- 3. creacion de equipos y mostrar los que ya tienes
+- 4. back y front inscribirse a torneos
+- 5. tema de que hace el organizador en el torneo y torneos en general
+- 6.
 
-Caso de uso TOTAL para planear todo ya:
-Administrador inicia sesion y hace organizador a un usuario
-(
-    back{
-        crear una variable de sesion con el rol del usuario en http controllers auth quizas 
-        auth()->user()->es_organizador
-        auth()->user()->es_administrador
-    }
-)
-(index de usuarios, que tenga un boton para hacerlos organizadores con comprobación extra)
+
+2. (index de usuarios, que tenga un boton para hacerlos organizadores con comprobación extra)
 Organizador inicia sesion y crea un torneo en un dia
 (
     view{
@@ -35,19 +35,19 @@ Organizador inicia sesion y crea un torneo en un dia
         controlador de calendario
     }
 )
-Usuarios crean sus equipos pokemon
+3. Usuarios crean sus equipos pokemon
 (
     view{
         conectar back con front
     }
 )
-Usuarios se inscriben al torneo 
+4. Usuarios se inscriben al torneo 
 (
     back {
         controlador de inscripciones
     }
 )
-Organizador entra al torneo por si acaso
+5. Organizador entra al torneo por si acaso
 (
     view {
         pagina torneo
@@ -56,7 +56,72 @@ Organizador entra al torneo por si acaso
         scripts de los brackets
     }
 )
-Usuarios entran al torneo para jugar
+6. Usuarios entran al torneo para jugar
+(
+    view{
+        tema teamsheets del rival y eso
+    }
+    back {
+        metodos internos del torneo
+        conexiones con showdown
+        bot para las salas
+    }
+)
+Juegan el torneo
+Jugador gana
+Organizador lo declara ganador
+Jugador mira estadisticas
+(
+    view{
+        pagina estadisticas
+    }
+    back{
+        controlador estadisticas
+    }
+)
+Jugador ve que ha ganado en sus estadisticas
+---------------------------------------------------
+1. Administrador inicia sesion y hace organizador a un usuario
+(
+    back{
+        crear una variable de sesion con el rol del usuario en http controllers auth quizas 
+        auth()->user()->es_organizador
+        auth()->user()->es_administrador
+    }
+)
+2. (index de usuarios, que tenga un boton para hacerlos organizadores con comprobación extra)
+Organizador inicia sesion y crea un torneo en un dia
+(
+    view{
+        pagina de calendario y formulario
+    }
+    back{
+        controlador de torneos
+        controlador de calendario
+    }
+)
+3. Usuarios crean sus equipos pokemon
+(
+    view{
+        conectar back con front
+    }
+)
+4. Usuarios se inscriben al torneo 
+(
+    back {
+        controlador de inscripciones
+    }
+)
+5. Organizador entra al torneo por si acaso
+(
+    view {
+        pagina torneo
+    }
+    back {
+        scripts de los brackets
+    }
+)
+6. Usuarios entran al torneo para jugar
 (
     view{
         tema teamsheets del rival y eso

@@ -134,5 +134,44 @@
             container.appendChild(dayDiv);
         }
     </script>
+    <!-- @php
+    $eventosPorDia = [];
+
+    foreach ($eventos ?? [] as $evento) {
+        // Asume que fecha está en formato dd/mm/yyyy
+        [$dia, $mes, $anio] = explode('/', $evento['fecha']);
+        if ((int)$mes === now()->month && (int)$anio === now()->year) {
+            $eventosPorDia[(int)$dia] = $evento['torneo']; // puedes añadir más info si quieres
+        }
+    }
+
+    $eventosJS = json_encode($eventosPorDia);
+@endphp
+
+<script>
+    const container = document.getElementById("dias-container");
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth(); // 0-11
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+    const eventos = @json($eventosJS);
+
+    for (let day = 1; day <= daysInMonth; day++) {
+        const dayDiv = document.createElement("div");
+        dayDiv.textContent = day;
+
+        // Día con evento
+        if (eventos[day]) {
+            dayDiv.className = "w-20v h-20v mx-1 my-1 flex items-center justify-center border border-black bg-yellow-300 font-bold rounded";
+            dayDiv.title = "Torneo ID: " + eventos[day];
+        } else {
+            dayDiv.className = "w-20v h-20v mx-1 my-1 flex items-center justify-center border border-black bg-white rounded";
+        }
+
+        container.appendChild(dayDiv);
+    }
+</script> -->
+
 </x-layouts.layout>
 @endauth

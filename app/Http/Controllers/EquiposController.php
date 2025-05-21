@@ -30,15 +30,30 @@ class EquiposController extends Controller
         function getPokemonIdFromUrl($url){
             return (int) rtrim(substr($url, strrpos(rtrim($url, '/'), '/') + 1), '/');
         }
+
+        function getMoves($name){
+            $pokemonDataResponse = Http::get("https://pokeapi.co/api/v2/pokemon/{$name}");
+            $pokemonData = $pokemonDataResponse->json();
+
+            return collect($pokemonData['moves'])->map(fn($move) => $move['move']['name'])->toArray();
+        }
         
         $pokemonResponse = Http::get('https://pokeapi.co/api/v2/pokedex/paldea');
         $pokemonList = collect($pokemonResponse->json('pokemon_entries'))
             ->map(fn ($entry) => [
                 'name' => ucfirst($entry['pokemon_species']['name']),
-                'url' => "https://pokeapi.co/api/v2/pokemon/" . strtolower($entry['pokemon_species']['name']),
+                'moves' => getMoves($entry['pokemon_species']['name']),
                 'sprite' => "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" .
                             getPokemonIdFromUrl($entry['pokemon_species']['url']) . ".png",
             ]);
+
+        // $pokemonList = collect($pokemonResponse->json('pokemon_entries'))
+        //     ->map(fn ($entry) => [
+        //         'name' => ucfirst($entry['pokemon_species']['name']),
+        //         'url' => "https://pokeapi.co/api/v2/pokemon/" . strtolower($entry['pokemon_species']['name']),
+        //         'sprite' => "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" .
+        //                     getPokemonIdFromUrl($entry['pokemon_species']['url']) . ".png",
+        //     ]);
 
         $itemResponse = Http::get('https://pokeapi.co/api/v2/item?limit=1000');
         $itemList = collect($itemResponse->json('results'))

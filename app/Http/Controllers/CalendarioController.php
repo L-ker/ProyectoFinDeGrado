@@ -1,25 +1,22 @@
 <?php
 
 namespace App\Http\Controllers;
+use Carbon\Carbon;
 
 use Illuminate\Http\Request;
 
 class CalendarioController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function home()
     {
-        //
-    }
+        $eventos = Calendario::all()->map(function ($evento) {
+            return [
+                'fecha' => $evento->fecha, // formato dd/mm/yyyy
+                'torneo' => $evento->torneo,
+            ];
+        });
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return view('home', compact('eventos'));
     }
 
     /**
@@ -27,7 +24,22 @@ class CalendarioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $fechaOriginal = $request->fecha; // dd/mm/yyyy
+        $torneoId = $request->torneo;
+
+        [$dia, $mes, $anio] = explode('/', $fechaOriginal);
+
+        $timestamp = mktime(0, 0, 0, $mes, $dia, $anio);
+
+        $fechaFinInscripcion = date('d/m/Y', $timestampInscripcion);
+
+        Calendario::create([
+        'torneo' => $torneoId,
+        'fecha' => $fechaOriginal,
+        'fecha_fin_inscripcion' => $fechaFinInscripcion,
+        ]);
+
+        return view('home');
     }
 
     /**

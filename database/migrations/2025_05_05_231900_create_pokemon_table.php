@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string("movimiento2");
             $table->string("movimiento3");
             $table->string("movimiento4");
+            $table->string("sprite");
             $table->timestamps();
         });
     }

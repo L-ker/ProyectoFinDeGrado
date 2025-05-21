@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Torneos;
+use App\Models\Calendario;
 
 class TorneoController extends Controller
 {
@@ -28,18 +29,16 @@ class TorneoController extends Controller
      */
     public function store(Request $request)
     {
-        //se tiene que crear el calendario a la vez
-        //  $request->merge([
-        //     'password' => Crypt::encryptString($request->password) 
-        // ]);
+        $torneo = Torneos::create([
+        'organizador' => $request->organizador_id,
+        'modalidad' => $request->modalidad,
+        'nombre' => $request->nombre,
+        ]);
 
-        // $usuario = new Usuarios($request->input());
-
-        // $usuario->save();
-        // session()->flash("mensaje",__('El usuario') .' '. $usuario->nombre .''. __('ha sido registrado'));
-
-        // return redirect()->route('home');
-        return view("home");
+        return redirect()->route('calendarios.store', [
+        'torneo_id' => $torneo->id,
+        'fecha' => $fechaFormateada,
+        ]);
     }
 
     /**

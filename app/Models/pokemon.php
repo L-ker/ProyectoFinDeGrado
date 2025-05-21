@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Pokemon extends Model
 {
-    public $fillable=["nombre","terastallization","objeto","movimiento1","movimiento2","movimiento3","movimiento4",];
+    public $fillable=["nombre","terastallization","objeto","movimiento1","movimiento2","movimiento3","movimiento4","sprite"];
 }

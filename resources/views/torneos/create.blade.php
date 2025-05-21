@@ -4,6 +4,8 @@
         @csrf
             <div>
                 <input type="hidden" name="organizador_id" value="{{ auth()->user()->id }}">
+                <x-input-label for="nombre" value="Nombre del torneo:"/>
+                <x-text-input id="nombre" class="block mt-1 w-full" type="text" name="nombre" required/>
                 <x-input-label for="fecha" value="fecha (formato dd/mm/yyyy):"/>
                 <x-text-input id="fecha" class="block mt-1 w-full" type="text" name="fecha"/>
                 <x-input-label for="modalidad" value="modalidad:"/>

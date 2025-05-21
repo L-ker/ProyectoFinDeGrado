@@ -18,6 +18,7 @@ return new class extends Migration
             ->onUpdate('cascade')
             ->onDelete("cascade");
             $table->string("modalidad");
+            $table->string("nombre");
             $table->boolean("activo")->default(true);
             $table->foreignId('ganador')
             ->constrained("users")
