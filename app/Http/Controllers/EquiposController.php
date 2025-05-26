@@ -57,7 +57,43 @@ class EquiposController extends Controller
      */
     public function store(Request $request)
     {
-        
+        $pokemonIds = [];
+
+        // 1. Crear los 6 Pokémon
+        for ($i = 1; $i <= 6; $i++) {
+            $data = $request->input("pokemon_$i");
+
+            $pokemon = Pokemon::create([
+                'nombre'           => $data['name'],
+                'terastallization' => $request->input("terastallizations"), // si luego es una por Pokémon, cámbialo
+                'objeto'           => $data['item'],
+                'movimiento1'      => $data['moves'][0],
+                'movimiento2'      => $data['moves'][1],
+                'movimiento3'      => $data['moves'][2],
+                'movimiento4'      => $data['moves'][3],
+                'sprite'           => $data['sprite'],
+            ]);
+
+            $pokemonIds[] = $pokemon->id;
+        }
+
+        // 2. Crear EquipoPokemon
+        $equipoPokemon = EquipoPokemon::create([
+            'pokemon1_id' => $pokemonIds[0],
+            'pokemon2_id' => $pokemonIds[1],
+            'pokemon3_id' => $pokemonIds[2],
+            'pokemon4_id' => $pokemonIds[3],
+            'pokemon5_id' => $pokemonIds[4],
+            'pokemon6_id' => $pokemonIds[5],
+        ]);
+
+        // 3. Asociar el equipo con el usuario actual
+        EquiposUsuarios::create([
+            'user_id' => Auth::id(),
+            'equipo_pokemon_id' => $equipoPokemon->id,
+        ]);
+
+        return redirect()->route('equipos.index')->with('success', 'Equipo creado correctamente.');
     }
 
     /**

@@ -16,6 +16,7 @@ https://chatgpt.com/c/681cc462-1488-8005-973b-54a9c50b187c
 TODO:
 - middleware isAdminOrOrganizer para las paginas de torneos y eso
 - controlador usuarios y index
+- Mensajes al mandar formularios y cosas asi de que se ha hecho bien
 - 1. controlar usuarios si eres admin
 - 2. mostrar en el calendario los torneos creados y mejorar view crear torneos
 - 3. creacion de equipos y mostrar los que ya tienes
