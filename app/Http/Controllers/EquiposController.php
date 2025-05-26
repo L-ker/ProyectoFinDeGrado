@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Pokemon;
+use App\Models\equiposUsuarios;
+use App\Models\EquiposPokemon;
 
 class EquiposController extends Controller
 {
@@ -13,11 +16,15 @@ class EquiposController extends Controller
      */
     public function index()
     {    
-        $equipos = auth()->user()?->equiposPokemon ?? collect(); 
+    $usuario = auth()->user();
 
-        return view('equipos.index', [
-            'equipos' => $equipos,
-        ]);
+    $equipos = $usuario->equiposUsuarios->map(function ($eu) {
+        return $eu->equipo;
+    });
+
+    return view('equipos.index', [
+        'equipos' => $equipos,
+    ]);
         
     }
     
@@ -57,15 +64,16 @@ class EquiposController extends Controller
      */
     public function store(Request $request)
     {
+        // Para testear qué datos llegan, muestra y para ejecución aquí:
+        // dd($request->all());
         $pokemonIds = [];
 
-        // 1. Crear los 6 Pokémon
         for ($i = 1; $i <= 6; $i++) {
             $data = $request->input("pokemon_$i");
 
             $pokemon = Pokemon::create([
                 'nombre'           => $data['name'],
-                'terastallization' => $request->input("terastallizations"), // si luego es una por Pokémon, cámbialo
+                'terastallization' => $data['terastallization'],
                 'objeto'           => $data['item'],
                 'movimiento1'      => $data['moves'][0],
                 'movimiento2'      => $data['moves'][1],
@@ -77,20 +85,20 @@ class EquiposController extends Controller
             $pokemonIds[] = $pokemon->id;
         }
 
-        // 2. Crear EquipoPokemon
-        $equipoPokemon = EquipoPokemon::create([
-            'pokemon1_id' => $pokemonIds[0],
-            'pokemon2_id' => $pokemonIds[1],
-            'pokemon3_id' => $pokemonIds[2],
-            'pokemon4_id' => $pokemonIds[3],
-            'pokemon5_id' => $pokemonIds[4],
-            'pokemon6_id' => $pokemonIds[5],
+        // Crear el equipo Pokémon con los campos correctos en $fillable y base datos
+        $equipoPokemon = EquiposPokemon::create([
+            'idPokemon1' => $pokemonIds[0],
+            'idPokemon2' => $pokemonIds[1],
+            'idPokemon3' => $pokemonIds[2],
+            'idPokemon4' => $pokemonIds[3],
+            'idPokemon5' => $pokemonIds[4],
+            'idPokemon6' => $pokemonIds[5],
         ]);
 
-        // 3. Asociar el equipo con el usuario actual
+        // Asociar equipo con usuario actual con los campos correctos
         EquiposUsuarios::create([
-            'user_id' => Auth::id(),
-            'equipo_pokemon_id' => $equipoPokemon->id,
+            'idUsuario' => Auth::id(),
+            'idEquipo' => $equipoPokemon->id,
         ]);
 
         return redirect()->route('equipos.index')->with('success', 'Equipo creado correctamente.');

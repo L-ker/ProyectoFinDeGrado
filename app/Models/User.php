@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\EquiposUsuarios;
+
 
 class User extends Authenticatable
 {
@@ -49,4 +51,9 @@ class User extends Authenticatable
             'es_administrador' => 'boolean',
         ];
     }
+    public function equiposUsuarios()
+    {
+        return $this->hasMany(EquiposUsuarios::class, 'idUsuario');
+    }
+
 }

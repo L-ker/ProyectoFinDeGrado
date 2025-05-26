@@ -1,12 +1,13 @@
 <x-layouts.layout>
-        <style>
+    <style>
         html, body {
             height: 100%;
             margin: 0;
             padding: 0;
-            overflow: hidden; /* Importante: evita scroll innecesario global */
+            overflow: hidden; /* Evita scroll global innecesario */
         }
     </style>
+
     <form method="POST" action="{{ route('equipos.store') }}">
         @csrf
         <div class="w-200v h-65v rounded-xl bg-rojoClaro overflow-y-auto p-2 shadow-md text-acentuar1 scrollbar-hide flex flex-col items-center justify-start space-y-4">
@@ -20,18 +21,18 @@
                         data-index="{{ $i }}">
                         <option value="">-- Selecciona un Pokémon --</option>
                         @foreach ($pokemonList as $pokemon)
-                            <option value="{{ $pokemon['name'] }}" data-sprite="{{ $pokemon['sprite'] }}">{{ $pokemon['name'] }}
-                            </option>
+                            <option value="{{ $pokemon['name'] }}" data-sprite="{{ $pokemon['sprite'] }}">{{ $pokemon['name'] }}</option>
                         @endforeach
                     </select>
 
-                    <label for="terastallizations">teracristalizacion:</label>
-                    <select id="terastallizations" name="terastallizations" class="block mt-1 w-full rounded border-gray-300">
-                    @foreach (config('terastallizations') as $terastallization)
+                    <!-- Select Teracristalización -->
+                    <label for="terastallizations_{{ $i }}">teracristalizacion:</label>
+                    <select id="terastallizations_{{ $i }}" name="pokemon_{{ $i }}[terastallization]" class="block mt-1 w-full rounded border-gray-300">
+                        @foreach (config('terastallizations') as $terastallization)
                             <option value="{{ $terastallization }}" {{ $loop->first ? 'selected' : '' }}>
-                            {{ $terastallization }}
-                        </option>
-                    @endforeach
+                                {{ $terastallization }}
+                            </option>
+                        @endforeach
                     </select>
 
                     <!-- Sprite oculto -->
