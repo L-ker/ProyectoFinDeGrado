@@ -3,13 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Torneos;
 use Carbon\Carbon;
 
 class Calendario extends Model
 {
     public $fillable=["torneo","fecha","fecha_fin_inscripcion"];
     public function torneo(){
-        return $this->belongsTo(Torneo::class, 'torneo');
+        return $this->belongsTo(Torneos::class, 'torneo');
     }
 
     public static function crearConFecha($torneoId, $fechaOriginal)
@@ -24,17 +25,6 @@ class Calendario extends Model
             'fecha' => $fechaOriginal,
             'fecha_fin_inscripcion' => $fechaFinInscripcion,
         ]);
-    }
-
-    public function getFechaCarbonAttribute()
-    {
-        return Carbon::createFromFormat('d/m/Y', $this->fecha);
-    }
-
-
-    public function getFechaFinInscripcionCarbonAttribute()
-    {
-        return Carbon::createFromFormat('d/m/Y', $this->fecha_fin_inscripcion);
     }
 
 }

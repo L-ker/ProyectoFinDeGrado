@@ -5,25 +5,24 @@ use Carbon\Carbon;
 
 use Illuminate\Http\Request;
 use App\Models\Calendario;
+use App\Models\Torneos;
 
 class CalendarioController extends Controller
 {
     public function home()
     {
-        $eventos = Calendario::all()->filter(function ($evento) {
-            return $evento->fecha_carbon->month === now()->month &&
-                $evento->fecha_carbon->year === now()->year;
+
+        $eventos = Calendario::all()->map(function ($evento) {
+            $torneo = Torneos::find($evento->torneo);
+
+            return [
+                'fecha' => $evento->fecha, // formato dd/mm/yyyy
+                'torneo' => $evento->torneo,
+                'nombre' => $torneo?->nombre ?? 'Torneo desconocido',
+            ];
         });
 
         return view('home', compact('eventos'));
-        // $eventos = Calendario::all()->map(function ($evento) {
-        //     return [
-        //         'fecha' => $evento->fecha, // formato dd/mm/yyyy
-        //         'torneo' => $evento->torneo,
-        //     ];
-        // });
-
-        // return view('home', compact('eventos'));
     }
 
     /**

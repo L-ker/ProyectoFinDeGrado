@@ -105,7 +105,8 @@
         <div class="grid" style="display: grid; height: 100%; width: 100%; grid-template-columns: repeat(4, 1fr); grid-template-rows: 0.4fr 1fr 1fr 1fr; gap: 16px; background-color: #eee; padding: 8px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25), 0 1px 2px rgba(0, 0, 0, 0.1);">
             <div class="relative flex items-center justify-between px-8" style="grid-column: span 4; grid-row: span 1;">      
                 <a href="{{ route('equipos.index') }}"><img src="{{ asset('images/pokeballGirada.png') }}" alt="Logo"
-                class="w-32 h-32 object-contain absolute -top-8 -left-8 z-10"></a>
+                class="w-32 h-32 object-contain absolute -top-8 -left-8 z-10"> Creac <- Crea tu equipo aqui</a>
+                
                 
                 <h1 class="text-rojoClaro text-5xl text-center flex-grow">Calendario</h1>
                 @if(auth()->check() && (auth()->user()->es_organizador || auth()->user()->es_administrador))
@@ -120,112 +121,49 @@
         </div>
     </div>
 
-    @php
-        // Se crean dos arrays:
-        // - $eventosPorDia contiene los torneos del mes actual organizados por día
-        // - $fechasFinInscripcion contiene el nombre del torneo cuya inscripción finaliza ese día
-        $eventosPorDia = [];
-        $fechasFinInscripcion = [];
-
-        foreach ($eventos ?? [] as $evento) {
-            $dia = $evento->fecha_carbon->day;
-            $finDia = $evento->fecha_fin_inscripcion_carbon->day;
-
-            $eventosPorDia[$dia] = [
-                'torneo_id' => $evento->torneo->id,
-                'torneo_nombre' => $evento->torneo->nombre,
-                'fecha' => $evento->fecha,
-                'fin_inscripcion' => $evento->fecha_fin_inscripcion_carbon->format('d/m/Y'),
-            ];
-
-            $fechasFinInscripcion[$finDia] = $evento->torneo->nombre;
-        }
-    @endphp
-
-    <!-- Pasamos los arrays PHP a JavaScript -->
     <script>
-        const eventos = @json($eventosPorDia);
-        const fechasFinInscripcion = @json($fechasFinInscripcion);
-    </script>
+    const eventos = @json($eventos);
+    const diasContainer = document.getElementById('dias-container');
 
-    <!-- Script que genera el calendario día por día -->
-    <script>
-        const container = document.getElementById("dias-container");
-        const today = new Date();
-        const year = today.getFullYear();
-        const month = today.getMonth();
-        const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth(); // Mes actual
 
-        for (let day = 1; day <= daysInMonth; day++) {
-            // Crear el contenedor del día
-            const dayDiv = document.createElement("div");
-            dayDiv.className = "w-20v h-20v mx-1 my-1 flex flex-col items-center justify-start border border-black rounded p-2 relative bg-white";
+    const diasEnMes = new Date(year, month + 1, 0).getDate();
 
-            // Mostrar el número del día
-            const dayNumber = document.createElement("div");
-            dayNumber.textContent = day;
-            dayNumber.className = "text-lg font-bold mb-1";
-            dayDiv.appendChild(dayNumber);
+    for (let dia = 1; dia <= diasEnMes; dia++) {
+        const fecha = new Date(year, month, dia);
+        const diaFormateado = ('0' + fecha.getDate()).slice(-2) + '/' + ('0' + (fecha.getMonth() + 1)).slice(-2) + '/' + fecha.getFullYear();
 
-            // Si ese día es la fecha fin de inscripción de un torneo, se muestra un aviso en rojo
-            if (fechasFinInscripcion[day]) {
-                const aviso = document.createElement("div");
-                aviso.textContent = `Hoy es la fecha de fin de inscripción del torneo ${fechasFinInscripcion[day]}`;
-                aviso.style.fontSize = "0.7rem";
-                aviso.style.color = "red";
-                aviso.style.textAlign = "center";
-                aviso.style.marginBottom = "4px";
-                dayDiv.appendChild(aviso);
-                dayDiv.style.backgroundColor = "#ffe0e0";
-            }
+        const divDia = document.createElement('div');
+        divDia.className = 'w-36 h-36 bg-white m-2 p-2 rounded shadow flex flex-col items-center justify-start text-center';
+        divDia.innerHTML = `<strong>${diaFormateado}</strong>`;
 
-            // Si hay torneo ese día, se muestra un botón con el nombre del torneo
-            if (eventos[day]) {
-                const torneo = eventos[day];
+        const evento = eventos.find(ev => ev.fecha === diaFormateado);
+        const diaAnterior = new Date(fecha);
+        diaAnterior.setDate(fecha.getDate() + 1);
+        const diaAnteriorFormateado = ('0' + diaAnterior.getDate()).slice(-2) + '/' + ('0' + (diaAnterior.getMonth() + 1)).slice(-2) + '/' + diaAnterior.getFullYear();
 
-                // Botón con el nombre del torneo
-                const botonTorneo = document.createElement("button");
-                botonTorneo.textContent = torneo.torneo_nombre;
-                botonTorneo.className = "bg-yellow-500 text-white px-2 py-1 rounded shadow hover:bg-yellow-600 transition mb-1";
+        const finInscripcion = eventos.find(ev => ev.fecha === diaAnteriorFormateado);
 
-                // Contenedor oculto que aparecerá al hacer clic en el botón del torneo
-                const contenedorBotones = document.createElement("div");
-                contenedorBotones.style.display = "none";
-                contenedorBotones.className = "flex flex-col gap-1";
-
-                // Botón "Inscribirte"
-                const btnInscribirse = document.createElement("button");
-                btnInscribirse.textContent = "Inscribirte";
-                btnInscribirse.className = "bg-green-600 text-white px-2 py-1 rounded hover:bg-green-700";
-
-                // Botón "Cancelar"
-                const btnCancelar = document.createElement("button");
-                btnCancelar.textContent = "Cancelar";
-                btnCancelar.className = "bg-gray-600 text-white px-2 py-1 rounded hover:bg-gray-700";
-
-                // Añadir ambos botones al contenedor oculto
-                contenedorBotones.appendChild(btnInscribirse);
-                contenedorBotones.appendChild(btnCancelar);
-
-                // Alternar visibilidad del contenedor al hacer clic en el botón del torneo
-                botonTorneo.addEventListener("click", () => {
-                    contenedorBotones.style.display = contenedorBotones.style.display === "none" ? "flex" : "none";
-                });
-
-                // Añadir botón del torneo y contenedor de botones al día
-                dayDiv.appendChild(botonTorneo);
-                dayDiv.appendChild(contenedorBotones);
-
-                // Cambiar fondo si no tiene aviso de inscripción
-                if (!fechasFinInscripcion[day]) {
-                    dayDiv.style.backgroundColor = "#fff9c4"; // Fondo amarillo claro si no hay aviso rojo
-                }
-            }
-
-            // Finalmente, añadir el día al calendario
-            container.appendChild(dayDiv);
+        if (evento) {
+            const boton = document.createElement('button');
+            boton.className = 'mt-2 px-2 py-1 bg-green-500 text-white rounded text-sm hover:bg-green-600 transition';
+            boton.textContent = `Inscribirse al torneo ${evento.nombre}`;
+            divDia.appendChild(boton);
         }
-    </script>
+
+        if (finInscripcion) {
+            const mensaje = document.createElement('p');
+            mensaje.className = 'text-red-500 text-xs mt-1';
+            mensaje.textContent = `Fin de inscripción del torneo ${finInscripcion.nombre}`;
+            divDia.appendChild(mensaje);
+        }
+
+        diasContainer.appendChild(divDia);
+    }
+</script>
+
 </x-layouts.layout>
 
 @endauth

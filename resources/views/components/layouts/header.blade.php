@@ -4,9 +4,9 @@
     <div>
         @auth
             <div class="flex items-center gap-4">
-                <span class="bg-white text-black font-semibold py-2 px-4 rounded-lg shadow">
+                <a href="{{ route('estadisticas.index') }}"><span class="bg-white text-black font-semibold py-2 px-4 rounded-lg shadow">
                     Usuario: {{ auth()->user()->name }}
-                </span>
+                </span></a>
                 <span class="bg-white text-black font-semibold py-2 px-4 rounded-lg shadow">
                     rol: 
                     @if(auth()->user()->es_administrador)
