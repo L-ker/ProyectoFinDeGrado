@@ -121,13 +121,13 @@
         </div>
     </div>
 
-    <script>
+  <script>
     const eventos = @json($eventos);
     const diasContainer = document.getElementById('dias-container');
 
     const now = new Date();
     const year = now.getFullYear();
-    const month = now.getMonth(); // Mes actual
+    const month = now.getMonth();
 
     const diasEnMes = new Date(year, month + 1, 0).getDate();
 
@@ -150,6 +150,18 @@
             const boton = document.createElement('button');
             boton.className = 'mt-2 px-2 py-1 bg-green-500 text-white rounded text-sm hover:bg-green-600 transition';
             boton.textContent = `Inscribirse al torneo ${evento.nombre}`;
+
+            boton.addEventListener('click', () => {
+                if (confirm(`¿Estás seguro que quieres inscribirte al torneo ${evento.nombre}?`)) {
+                    const hoyStr = ('0' + now.getDate()).slice(-2) + '/' + ('0' + (now.getMonth() + 1)).slice(-2) + '/' + now.getFullYear();
+                    if (hoyStr === evento.fecha) {
+                        alert('No puedes inscribirte el mismo día del torneo.');
+                    } else {
+                        window.location.href = `/inscripciones/store/${evento.torneo}`;
+                    }
+                }
+            });
+
             divDia.appendChild(boton);
         }
 
@@ -163,6 +175,7 @@
         diasContainer.appendChild(divDia);
     }
 </script>
+
 
 </x-layouts.layout>
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Inscripciones;
 
 class InscripcionesController extends Controller
 {
@@ -25,9 +26,22 @@ class InscripcionesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store($torneoId)
     {
-        //
+        $usuario = auth()->user();
+
+        $existe = Inscripciones::where('idUsuario', $usuario->id)
+                          ->where('idTorneo', $torneoId)
+                          ->exists();
+
+        if (!$existe) {
+            Inscripciones::create([
+            'idUsuario' => $usuario->id,
+            'idTorneo' => $torneoId,
+            ]);
+        }
+
+        return redirect('/');
     }
 
     /**

@@ -17,6 +17,9 @@ class TorneoController extends Controller
      */
     public function create()
     {
+        if (auth()->check() && !(auth()->user()->es_organizador || auth()->user()->es_administrador)) {
+            return redirect('/');
+        }
         return view("torneos.create");
     }
 
