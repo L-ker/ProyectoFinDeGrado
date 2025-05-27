@@ -19,10 +19,9 @@ TODO:
 - Mensajes al mandar formularios y cosas asi de que se ha hecho bien
 - 1. controlar usuarios si eres admin
 - 2. mostrar en el calendario los torneos creados y mejorar view crear torneos
-- 3. creacion de equipos y mostrar los que ya tienes
-- 4. back y front inscribirse a torneos
-- 5. tema de que hace el organizador en el torneo y torneos en general
-- 6.
+- 3. back y front inscribirse a torneos
+- 4. tema de que hace el organizador en el torneo y torneos en general
+- 5.
 
 
 2. (index de usuarios, que tenga un boton para hacerlos organizadores con comprobación extra)
