@@ -10,14 +10,20 @@ class CalendarioController extends Controller
 {
     public function home()
     {
-        $eventos = Calendario::all()->map(function ($evento) {
-            return [
-                'fecha' => $evento->fecha, // formato dd/mm/yyyy
-                'torneo' => $evento->torneo,
-            ];
+        $eventos = Calendario::all()->filter(function ($evento) {
+            return $evento->fecha_carbon->month === now()->month &&
+                $evento->fecha_carbon->year === now()->year;
         });
 
         return view('home', compact('eventos'));
+        // $eventos = Calendario::all()->map(function ($evento) {
+        //     return [
+        //         'fecha' => $evento->fecha, // formato dd/mm/yyyy
+        //         'torneo' => $evento->torneo,
+        //     ];
+        // });
+
+        // return view('home', compact('eventos'));
     }
 
     /**

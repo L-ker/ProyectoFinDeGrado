@@ -13,6 +13,9 @@ https://chatgpt.com/c/6834f561-551c-8005-951d-192488480fa4
 bot torneos:
 https://chatgpt.com/c/682daa1a-96d8-8005-a5a5-f88e8fd2e5fd
 
+calendario e inscripciones:
+https://chatgpt.com/c/68358a44-9530-8005-942a-572339086b71
+
 TODO:
 - testear y si no va con ifs middleware isAdminOrOrganizer para las paginas de torneos y eso
 - controlador usuarios y index

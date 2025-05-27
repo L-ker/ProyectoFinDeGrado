@@ -10,9 +10,13 @@ use Illuminate\Support\Facades\Route;
 // Route::view("/","home")->name("home");
 Route::get('/', [CalendarioController::class, 'home'])->name('home');
 
-// Route::get('/panel-admin', function () {
-//     return 'Hola administrador';
+// Route::get('/solo-admin', function () {
+//     return 'Bienvenido, administrador.';
 // })->middleware('solo.admin');
+
+// Route::get('/admin-o-organizador', function () {
+//     return 'Bienvenido, admin u organizador.';
+// })->middleware('admin.organizador');
 
 Route::resource("equipos", EquiposController::class)
 ->middleware('auth');

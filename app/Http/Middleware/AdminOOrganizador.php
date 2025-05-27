@@ -13,6 +13,6 @@ class AdminOOrganizador
             return $next($request);
         }
 
-        abort(403, 'No autorizado');
+        return redirect('/'); // Redirige al home
     }
 }
