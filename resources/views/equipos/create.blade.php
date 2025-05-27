@@ -69,6 +69,42 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <script>
+        $('form').on('submit', function (e) {
+            let errores = [];
+            let nombres = [];
+            let items = [];
+
+            for (let i = 1; i <= 6; i++) {
+                let nombre = $(`#pokemon_${i}`).val();
+                let objeto = $(`#item_${i}`).val();
+                let movimientos = $(`#moves_${i}`).val();
+                let tera = $(`#terastallizations_${i}`).val();
+
+                if (!nombre || !objeto || !movimientos || movimientos.length === 0 || !tera) {
+                    errores.push(`Completa todos los campos del Pokémon #${i}`);
+                }
+
+                if (nombres.includes(nombre)) {
+                    errores.push(`No puedes seleccionar el mismo Pokémon más de una vez (repetido: ${nombre})`);
+                } else {
+                    nombres.push(nombre);
+                }
+
+                if (items.includes(objeto) && objeto !== "") {
+                    errores.push(`No puedes asignar el mismo objeto (${objeto}) a más de un Pokémon`);
+                } else if (objeto !== "") {
+                    items.push(objeto);
+                }
+            }
+
+            if (errores.length > 0) {
+                e.preventDefault();
+                alert(errores.join("\n"));
+            }
+        });
+    </script>
+
+    <script>
         $(document).ready(function () {
             function matchStart(params, data) {
                 if ($.trim(params.term) === '') return data;
@@ -87,7 +123,12 @@
                 matcher: matchStart,
                 placeholder: "Selecciona movimientos",
                 width: '100%',
-                maximumSelectionLength: 4
+                maximumSelectionLength: 4,
+                language: {
+                    maximumSelected: function (args) {
+                    return `Solo puedes seleccionar ${args.maximum} movimientos.`;
+                    }
+                }
             });
 
             $('.pokemon-select').on('change', function () {

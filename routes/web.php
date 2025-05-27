@@ -4,13 +4,20 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EquiposController;
 use App\Http\Controllers\CalendarioController;
 use App\Http\Controllers\TorneoController;
+use App\Http\Controllers\EstadisticasController;
 use Illuminate\Support\Facades\Route;
 
 // Route::view("/","home")->name("home");
 Route::get('/', [CalendarioController::class, 'home'])->name('home');
 
+// Route::get('/panel-admin', function () {
+//     return 'Hola administrador';
+// })->middleware('solo.admin');
 
 Route::resource("equipos", EquiposController::class)
+->middleware('auth');
+
+Route::resource("estadisticas", EstadisticasController::class)
 ->middleware('auth');
 
 Route::resource("calendarios", CalendarioController::class)
@@ -28,8 +35,5 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-// Route::get('/panel-admin', function () {
-//     return 'Hola administrador';
-// })->middleware('solo.admin');
 
 require __DIR__.'/auth.php';
