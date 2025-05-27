@@ -4,6 +4,12 @@
         <a href="https://victoryroad.pro/sv-rules-regulations/#elementor-toc__heading-anchor-3">
             <img src="{{ asset('images/regulacion.png') }}"/>
         </a>
+        <!-- <ul>
+            <li>Solo pokemons de paldea</li>
+            <li>Combates dobles</li>
+            <li>Reglas oficiales (no repetir pokemons ni objetos)</li>
+            <li>Las rondas duran un máximo de x</li>
+        </ul> -->
         <h1 class="text-7xl font-bold">EQUIPOS</h1>
         <div class="w-175v rounded-xl bg-white p-4 shadow-md text-black scrollbar-hide flex flex-col space-y-4">
             @if($equipos->isEmpty())

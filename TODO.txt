@@ -1,27 +1,25 @@
 conectar con showdown:
 https://chatgpt.com/c/681b91e5-4490-8005-b1fb-b7a03e726f3d
 
-register/login popup con modales:
-https://chatgpt.com/c/681946ce-c148-8005-a54c-701f5a6ebd8f
+bracket torneo:
+https://chatgpt.com/c/682b9cd3-1890-8005-93a7-496ee4d9b5ad
 
-teambuild:
-https://chatgpt.com/c/681bbb24-7994-8005-a980-9204ce498bbc
-
-general:
+documentacion:
 https://chatgpt.com/c/681102d5-6fbc-8005-9294-96d9cd6cc66a
 
-bracket torneo:
-https://chatgpt.com/c/681cc462-1488-8005-973b-54a9c50b187c
+middleware:
+https://chatgpt.com/c/6834f561-551c-8005-951d-192488480fa4
+
+bot torneos:
+https://chatgpt.com/c/682daa1a-96d8-8005-a5a5-f88e8fd2e5fd
 
 TODO:
-- middleware isAdminOrOrganizer para las paginas de torneos y eso
+- testear y si no va con ifs middleware isAdminOrOrganizer para las paginas de torneos y eso
 - controlador usuarios y index
-- Mensajes al mandar formularios y cosas asi de que se ha hecho bien
-- 1. controlar usuarios si eres admin
-- 2. mostrar en el calendario los torneos creados y mejorar view crear torneos
-- 3. back y front inscribirse a torneos
-- 4. tema de que hace el organizador en el torneo y torneos en general
-- 5.
+- Comprobar errores create equipos
+- 1. mostrar en el calendario los torneos creados y mejorar view crear torneos
+- 2. back y front inscribirse a torneos
+- 3. tema de que hace el organizador en el torneo y torneos en general
 
 
 2. (index de usuarios, que tenga un boton para hacerlos organizadores con comprobación extra)
@@ -33,12 +31,6 @@ Organizador inicia sesion y crea un torneo en un dia
     back{
         controlador de torneos
         controlador de calendario
-    }
-)
-3. Usuarios crean sus equipos pokemon
-(
-    view{
-        conectar back con front
     }
 )
 4. Usuarios se inscriben al torneo 
