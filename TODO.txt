@@ -9,11 +9,9 @@ https://chatgpt.com/c/681102d5-6fbc-8005-9294-96d9cd6cc66a
 
 
 TODO:
-- controlador usuarios y index
-- Comprobar errores create equipos
-- 1. mostrar en el calendario los torneos creados y mejorar view crear torneos
-- 2. back y front inscribirse a torneos
-- 3. tema de que hace el organizador en el torneo y torneos en general
+- 1. controlador usuarios y index
+TORNEOS:
+- 2. tema de que hace el organizador en el torneo y torneos en general
 
 
 2. (index de usuarios, que tenga un boton para hacerlos organizadores con comprobación extra)
