@@ -17,7 +17,7 @@ class TorneoController extends Controller
      */
     public function create()
     {
-        if (auth()->check() && !(auth()->user()->es_organizador || auth()->user()->es_administrador)) {
+        if (!auth()->check() || (!auth()->user()->es_administrador)) {
             return redirect('/');
         }
         return view("torneos.create");
@@ -32,6 +32,7 @@ class TorneoController extends Controller
         'organizador' => $request->organizador_id,
         'modalidad' => $request->modalidad,
         'nombre' => $request->nombre,
+        'hora_comienzo' => $request->hora_comienzo,
     ]);
 
     Calendario::crearConFecha($torneo->id, $request->fecha);
@@ -45,8 +46,31 @@ class TorneoController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $torneo = Torneos::findOrFail($id);
+        return view('torneos.show', compact('torneo'));
     }
+
+    public function estado($id)
+    {
+        $torneo = Torneos::findOrFail($id);
+        return response()->json(['estado' => $torneo->estado]);
+    }
+
+    public function iniciar($id)
+    {
+        $torneo = Torneos::findOrFail($id);
+
+        if (auth()->id() !== $torneo->organizador) {
+            abort(403); // No autorizado
+        }
+
+        $torneo->estado = 'activo';
+        $torneo->save();
+
+        return redirect()->back()->with('success', 'Torneo iniciado.');
+    }
+
+
 
     /**
      * Show the form for editing the specified resource.
@@ -61,13 +85,7 @@ class TorneoController extends Controller
      */
     public function update(Request $request, Torneo $torneo)
     {
-        // $request->merge([
-        //     'password' => Crypt::encryptString($request->password) 
-        // ]);
 
-        // $usuario->update($request->input());
-        // session()->flash("mensaje",__('El usuario') .' '. $usuario->nombre.''. __('ha sido actualizado'));
-        // return redirect()->route('usuarios.index');
     }
 
     /**
@@ -75,8 +93,6 @@ class TorneoController extends Controller
      */
     public function destroy(Torneo $torneo)
     {
-        // $usuario->delete();
-        // session()->flash("mensaje",__('El usuario') .' '. $usuario->nombre .''. __('ha sido eliminado'));
-        // return redirect()->route('usuarios.index');
+
     }
 }

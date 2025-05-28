@@ -1,5 +1,5 @@
 <?php
 return [
     'VGC',
-    'Compra equipo'
+    // 'Compra equipo'
 ];

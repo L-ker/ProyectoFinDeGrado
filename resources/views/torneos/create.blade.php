@@ -16,6 +16,9 @@
                         </option>
                     @endforeach
                 </select>
+                <x-input-label for="hora_comienzo" value="Hora de comienzo:"/>
+                <x-text-input id="hora_comienzo" class="block mt-1 w-full" type="datetime-local" name="hora_comienzo" required/>
+
             </div>
             <div class="mt-4 flex justify-end gap-2">
                 <a></a><button class="btn btn-sm btn-primary" type="submit">Crear</button></a>

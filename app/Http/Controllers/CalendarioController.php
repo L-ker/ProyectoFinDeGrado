@@ -13,12 +13,13 @@ class CalendarioController extends Controller
     {
 
         $eventos = Calendario::all()->map(function ($evento) {
-            $torneo = Torneos::find($evento->torneo);
+        $torneo = Torneos::find($evento->torneo);
 
             return [
-                'fecha' => $evento->fecha, // formato dd/mm/yyyy
+                'fecha' => $evento->fecha,
                 'torneo' => $evento->torneo,
-                'nombre' => $torneo?->nombre ?? 'Torneo desconocido',
+                'nombre' => $torneo?->nombre,
+                'id' => $torneo?->id,
             ];
         });
 

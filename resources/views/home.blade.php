@@ -122,58 +122,63 @@
     </div>
 
   <script>
-    const eventos = @json($eventos);
-    const diasContainer = document.getElementById('dias-container');
+  // Pasamos el token CSRF desde Blade a JS
+  window.csrfToken = "{{ csrf_token() }}";
 
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = now.getMonth();
+  const eventos = @json($eventos);
+  const diasContainer = document.getElementById('dias-container');
 
-    const diasEnMes = new Date(year, month + 1, 0).getDate();
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = now.getMonth();
 
-    for (let dia = 1; dia <= diasEnMes; dia++) {
-        const fecha = new Date(year, month, dia);
-        const diaFormateado = ('0' + fecha.getDate()).slice(-2) + '/' + ('0' + (fecha.getMonth() + 1)).slice(-2) + '/' + fecha.getFullYear();
+  const diasEnMes = new Date(year, month + 1, 0).getDate();
 
-        const divDia = document.createElement('div');
-        divDia.className = 'w-36 h-36 bg-white m-2 p-2 rounded shadow flex flex-col items-center justify-start text-center';
-        divDia.innerHTML = `<strong>${diaFormateado}</strong>`;
+  for (let dia = 1; dia <= diasEnMes; dia++) {
+      const fecha = new Date(year, month, dia);
+      const diaFormateado = ('0' + fecha.getDate()).slice(-2) + '/' + ('0' + (fecha.getMonth() + 1)).slice(-2) + '/' + fecha.getFullYear();
 
-        const evento = eventos.find(ev => ev.fecha === diaFormateado);
-        const diaAnterior = new Date(fecha);
-        diaAnterior.setDate(fecha.getDate() + 1);
-        const diaAnteriorFormateado = ('0' + diaAnterior.getDate()).slice(-2) + '/' + ('0' + (diaAnterior.getMonth() + 1)).slice(-2) + '/' + diaAnterior.getFullYear();
+      const divDia = document.createElement('div');
+      divDia.className = 'w-36 h-36 bg-white m-2 p-2 rounded shadow flex flex-col items-center justify-start text-center';
+      divDia.innerHTML = `<strong>${diaFormateado}</strong>`;
 
-        const finInscripcion = eventos.find(ev => ev.fecha === diaAnteriorFormateado);
+      const evento = eventos.find(ev => ev.fecha === diaFormateado);
 
-        if (evento) {
+      if (evento) {
+          const hoyStr = ('0' + now.getDate()).slice(-2) + '/' + ('0' + (now.getMonth() + 1)).slice(-2) + '/' + now.getFullYear();
+
+          if (hoyStr === evento.fecha) {
+            // Botón "Unirse al torneo" para el mismo día
+            const form = document.createElement('form');
+            form.method = 'GET';
+            form.action = `/torneos/${evento.torneo}`;
+
+
             const boton = document.createElement('button');
-            boton.className = 'mt-2 px-2 py-1 bg-green-500 text-white rounded text-sm hover:bg-green-600 transition';
-            boton.textContent = `Inscribirse al torneo ${evento.nombre}`;
+            boton.type = 'submit';
+            boton.className = 'mt-2 px-2 py-1 bg-blue-600 text-white rounded text-sm hover:bg-blue-700 transition';
+            boton.textContent = `Unirse al torneo ${evento.nombre}`;
 
-            boton.addEventListener('click', () => {
-                if (confirm(`¿Estás seguro que quieres inscribirte al torneo ${evento.nombre}?`)) {
-                    const hoyStr = ('0' + now.getDate()).slice(-2) + '/' + ('0' + (now.getMonth() + 1)).slice(-2) + '/' + now.getFullYear();
-                    if (hoyStr === evento.fecha) {
-                        alert('No puedes inscribirte el mismo día del torneo.');
-                    } else {
-                        window.location.href = `/inscripciones/store/${evento.torneo}`;
-                    }
-                }
-            });
+            form.appendChild(boton);
+            divDia.appendChild(form);
 
-            divDia.appendChild(boton);
-        }
+          } else {
+              const boton = document.createElement('button');
+              boton.className = 'mt-2 px-2 py-1 bg-green-500 text-white rounded text-sm hover:bg-green-600 transition';
+              boton.textContent = `Inscribirse al torneo ${evento.nombre}`;
 
-        if (finInscripcion) {
-            const mensaje = document.createElement('p');
-            mensaje.className = 'text-red-500 text-xs mt-1';
-            mensaje.textContent = `Fin de inscripción del torneo ${finInscripcion.nombre}`;
-            divDia.appendChild(mensaje);
-        }
+              boton.addEventListener('click', () => {
+                  if (confirm(`¿Estás seguro que quieres inscribirte al torneo ${evento.nombre}?`)) {
+                      window.location.href = `/inscripciones/store/${evento.torneo}`;
+                  }
+              });
 
-        diasContainer.appendChild(divDia);
-    }
+              divDia.appendChild(boton);
+          }
+      }
+
+      diasContainer.appendChild(divDia);
+  }
 </script>
 
 

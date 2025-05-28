@@ -9,61 +9,10 @@ https://chatgpt.com/c/681102d5-6fbc-8005-9294-96d9cd6cc66a
 
 
 TODO:
-- 1. controlador usuarios y index
 TORNEOS:
 - 2. tema de que hace el organizador en el torneo y torneos en general
 
 
-2. (index de usuarios, que tenga un boton para hacerlos organizadores con comprobación extra)
-Organizador inicia sesion y crea un torneo en un dia
-(
-    view{
-        pagina de calendario y formulario
-    }
-    back{
-        controlador de torneos
-        controlador de calendario
-    }
-)
-4. Usuarios se inscriben al torneo 
-(
-    back {
-        controlador de inscripciones
-    }
-)
-5. Organizador entra al torneo por si acaso
-(
-    view {
-        pagina torneo
-    }
-    back {
-        scripts de los brackets
-    }
-)
-6. Usuarios entran al torneo para jugar
-(
-    view{
-        tema teamsheets del rival y eso
-    }
-    back {
-        metodos internos del torneo
-        conexiones con showdown
-        bot para las salas
-    }
-)
-Juegan el torneo
-Jugador gana
-Organizador lo declara ganador
-Jugador mira estadisticas
-(
-    view{
-        pagina estadisticas
-    }
-    back{
-        controlador estadisticas
-    }
-)
-Jugador ve que ha ganado en sus estadisticas
 ---------------------------------------------------
 1. Administrador inicia sesion y hace organizador a un usuario
 (

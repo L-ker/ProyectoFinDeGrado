@@ -11,20 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('torneos', function (Blueprint $table) {
+        Schema::create('jugador_en_torneo', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('organizador')
-            ->constrained("users") 
+            $table->foreignId('torneo_id')
+            ->constrained("torneos") 
             ->onUpdate('cascade')
             ->onDelete("cascade");
-            $table->string("modalidad");
-            $table->string("nombre");
-            $table->string("estado")->default("inactivo");
-
-            $table->dateTime('hora_comienzo')->nullable();
-
-            $table->foreignId('ganador')
-            ->nullable()
+            $table->foreignId('user_id')
             ->constrained("users")
             ->onUpdate('cascade')
             ->onDelete("cascade");
@@ -37,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('torneo');
+        Schema::dropIfExists('jugador_en_torneo');
     }
 };
