@@ -33,7 +33,6 @@ class TorneoController extends Controller
         'organizador' => $request->organizador_id,
         'modalidad' => $request->modalidad,
         'nombre' => $request->nombre,
-        'hora_comienzo' => $request->hora_comienzo,
     ]);
 
     Calendario::crearConFecha($torneo->id, $request->fecha);
@@ -111,17 +110,43 @@ class TorneoController extends Controller
             }
         }
         
+        $totalRondas = log($siguientePotencia, 2);
 
-         // Crear módulos base (ronda 1)
+        $modulosPorRonda = [];
+
+        // crear ronda 1
+        $modulosPorRonda[1] = [];
         for ($i = 0; $i < count($jugadoresFiltrados); $i += 2) {
-            // Evitar módulo con dos nulos
-
-            Modulo::create([
+            $modulo = Modulo::create([
                 'torneo_id' => $torneo->id,
                 'ronda' => 1,
-                'jugador1_id' => $jugadoresFiltrados[$i],
-                'jugador2_id' => $jugadoresFiltrados[$i + 1] ?? null,
+                'user1_id' => $jugadoresFiltrados[$i],
+                'user2_id' => $jugadoresFiltrados[$i + 1] ?? null,
+                'modulo_hijo1_id' => null,
+                'modulo_hijo2_id' => null,
             ]);
+            $modulosPorRonda[1][] = $modulo;
+        }
+
+        // crear siguientes rondas
+        for ($ronda = 2; $ronda <= $totalRondas; $ronda++) {
+            $modulosPorRonda[$ronda] = [];
+            $numModulosRonda = count($modulosPorRonda[$ronda - 1]) / 2;
+            for ($i = 0; $i < $numModulosRonda; $i++) {
+                // Los hijos son dos módulos consecutivos de la ronda anterior
+                $hijo1 = $modulosPorRonda[$ronda - 1][$i * 2];
+                $hijo2 = $modulosPorRonda[$ronda - 1][$i * 2 + 1] ?? null;
+
+                $modulo = Modulo::create([
+                    'torneo_id' => $torneo->id,
+                    'ronda' => $ronda,
+                    'user1_id' => null,
+                    'user2_id' => null,
+                    'modulo_hijo1_id' => $hijo1->id,
+                    'modulo_hijo2_id' => $hijo2 ? $hijo2->id : null,
+                ]);
+                $modulosPorRonda[$ronda][] = $modulo;
+            }
         }
 
     }

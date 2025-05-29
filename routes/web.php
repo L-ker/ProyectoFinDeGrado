@@ -36,6 +36,7 @@ Route::get('/torneos/{torneo}/unirse', [JugadorEnTorneoController::class, 'showF
     ->name('jugadorEnTorneo.formularioUnirse')
     ->middleware('auth');
 
+Route::post('/modulo/{modulo}/enlace', [ModuloController::class, 'updateLink'])->name('modulos.updateLink');
 
 Route::resource("estadisticas", EstadisticasController::class)
 ->middleware('auth');

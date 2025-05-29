@@ -21,6 +21,11 @@ return new class extends Migration
 
             $table->unsignedInteger('ronda');
 
+            // Cambiamos enlace a enlace_user1 y enlace_user2 (nullable)
+            $table->string('enlace_user1')->nullable();
+            $table->string('enlace_user2')->nullable();
+            $table->string('enlace_definitivo')->nullable();
+
             $table->foreignId('user1_id')
                 ->nullable()
                 ->constrained('users')

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Torneos extends Model
 {
-    public $fillable=["organizador","nombre","modalidad","activo","ganador", "hora_comienzo"];
+    public $fillable=["organizador","nombre","modalidad","estado","ganador", "ronda_actual"];
     public function organizador(){
         return $this->belongsTo(User::class, 'organizador');
     }

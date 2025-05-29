@@ -21,13 +21,15 @@ return new class extends Migration
             $table->string("nombre");
             $table->string("estado")->default("inactivo");
 
-            $table->dateTime('hora_comienzo')->nullable();
-
             $table->foreignId('ganador')
             ->nullable()
             ->constrained("users")
             ->onUpdate('cascade')
             ->onDelete("cascade");
+
+            $table->integer('ronda_actual')
+            ->nullable()
+            ->default(1);
             $table->timestamps();
         });
     }
@@ -37,6 +39,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('torneo');
+        Schema::dropIfExists('torneos');
     }
 };

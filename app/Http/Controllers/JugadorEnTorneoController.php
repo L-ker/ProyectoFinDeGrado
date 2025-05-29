@@ -46,8 +46,14 @@ class JugadorEnTorneoController extends Controller
             return redirect()->route('torneos.show', $torneoId)->with('mensaje', 'No estás inscrito en este torneo.');
         }
 
+        $modulos = Modulo::with(['usuario1', 'usuario2'])
+        ->where('torneo_id', $torneoId)
+        ->orderBy('ronda')
+        ->orderBy('id')
+        ->get();
+
         // Retornar una vista con la info del jugador en el torneo
-        return view('jugador-en-torneo.show', compact('jugador', 'torneo'));
+        return view('jugador-en-torneo.show', compact('jugador', 'torneo', 'modulos'));
     }
 
 
