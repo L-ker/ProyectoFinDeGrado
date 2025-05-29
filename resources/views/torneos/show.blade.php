@@ -15,23 +15,7 @@
             @endif
 
             <div id="estado-torneo-container">
-                <p id="estado-torneo">Estado actual: {{ $torneo->estado }}</p>
-
-                @if($torneo->estado === 'inactivo')
-                    <form method="POST" action="{{ route('torneos.preparado', $torneo->id) }}">
-                        @csrf
-                        <label for="equipo_id">Selecciona tu equipo:</label>
-                        <select name="equipo_id" id="equipo_id" required class="form-select mb-2">
-                            <option value="" disabled selected>-- Elige un equipo --</option>
-                            @foreach ($equipos as $equipo)
-                                <option value="{{ $equipo }}">{{ $equipo }}</option>
-                            @endforeach
-                        </select>
-                        <button type="submit" class="btn btn-primary">Preparado</button>
-                    </form>
-                @elseif($torneo->estado === 'activo')
-                    <button id="btn-unirse" class="btn btn-success">Unirse</button>
-                @endif
+                
             </div>
 
             <script>

@@ -66,14 +66,66 @@ class TorneoController extends Controller
         $torneo = Torneos::findOrFail($id);
 
         if (auth()->id() !== $torneo->organizador) {
-            abort(403); // No autorizado
+            return redirect()->back()->with('mensaje', 'No estás autorizado para ver esta página.');
         }
 
         $torneo->estado = 'activo';
         $torneo->save();
 
+        $jugadores = JugadorEnTorneo::where('torneo_id', $torneo->id)->get();
+        if ($jugadores->count() < 2) {
+            return back()->with('mensaje', 'Necesitas al menos 2 jugadores para iniciar el torneo.');
+        }
+
+        $this->generarBracket($torneo, $jugadores);
+
         return redirect()->back()->with('success', 'Torneo iniciado.');
     }
+
+    private function generarBrackets(Torneos $torneo, $jugadores)
+    {
+        // sacar el numero de byes
+        $totalJugadores = $jugadores->count();
+        $siguientePotencia = pow(2, ceil(log($totalJugadores, 2)));
+        $numeroDeByes = $siguientePotencia - $totalJugadores;
+
+        //array con usuarios y la cantidad de byes
+        $jugadoresIds = $jugadores->pluck('user_id')->toArray();
+
+        for ($i = 0; $i < $numeroDeByes; $i++) {
+            $jugadoresIds[] = null;
+        }
+
+        shuffle($jugadoresIds);
+
+        //despues del shuffle ha podido darse pares null-null asi que lo reorganizamos agregando 
+        $jugadoresFiltrados = [];
+        $byeCount = 0;
+        foreach ($jugadoresIds as $id) {
+            if ($id === null) {
+                // Intercalar los byes
+                array_splice($jugadoresFiltrados, $byeCount * 2, 0, [$id]);
+                $byeCount++;
+            } else {
+                $jugadoresFiltrados[] = $id;
+            }
+        }
+        
+
+         // Crear módulos base (ronda 1)
+        for ($i = 0; $i < count($jugadoresFiltrados); $i += 2) {
+            // Evitar módulo con dos nulos
+
+            Modulo::create([
+                'torneo_id' => $torneo->id,
+                'ronda' => 1,
+                'jugador1_id' => $jugadoresFiltrados[$i],
+                'jugador2_id' => $jugadoresFiltrados[$i + 1] ?? null,
+            ]);
+        }
+
+    }
+
 
 
 

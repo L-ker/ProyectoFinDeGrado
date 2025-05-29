@@ -40,12 +40,14 @@ class JugadorEnTorneoController extends Controller
                                 ->where('user_id', auth()->id())
                                 ->first();
 
-        if (!$jugador) {
+        $torneo = Torneos::findOrFail($torneoId);
+
+        if (!$jugador && !(auth()->id() === $torneo->organizador)) {
             return redirect()->route('torneos.show', $torneoId)->with('mensaje', 'No estás inscrito en este torneo.');
         }
 
         // Retornar una vista con la info del jugador en el torneo
-        return view('jugador-en-torneo.show', compact('jugador'));
+        return view('jugador-en-torneo.show', compact('jugador', 'torneo'));
     }
 
 
