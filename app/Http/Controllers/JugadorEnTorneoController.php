@@ -8,28 +8,46 @@ use App\Models\JugadorEnTorneo;
 class JugadorEnTorneoController extends Controller
 {
     public function marcarPreparado(Request $request, $torneoId)
-{
-    try {
-        $userId = auth()->id();
+    {
+        try {
+            $userId = auth()->id();
 
-        $existe = JugadorEnTorneo::where('torneo_id', $torneoId)
-            ->where('user_id', $userId)
-            ->first();
+            $existe = JugadorEnTorneo::where('torneo_id', $torneoId)
+                ->where('user_id', $userId)
+                ->first();
 
-        if ($existe) {
-            return response()->json(['message' => 'Ya estás dentro del torneo'], 200);
+            if ($existe) {
+                return redirect()->route('torneos.show', $torneoId)->with('mensaje', 'Ya estás dentro del torneo');
+            }
+
+            JugadorEnTorneo::create([
+                'torneo_id' => $torneoId,
+                'user_id' => $userId,
+                'equipo_id' => $request->equipo_id,
+            ]);
+
+            return redirect()->route('torneos.show', $torneoId)->with('mensaje', 'Listo para el torneo');
+
+        } catch (\Exception $e) {
+            return redirect()->route('torneos.show', $torneoId)->with('mensaje', 'Error en el servidor');
+        }
+    }
+
+    public function show($torneoId)
+    {
+        // Obtener datos para mostrar, por ejemplo:
+        $jugador = JugadorEnTorneo::where('torneo_id', $torneoId)
+                                ->where('user_id', auth()->id())
+                                ->first();
+
+        if (!$jugador) {
+            return redirect()->route('torneos.show', $torneoId)->with('mensaje', 'No estás inscrito en este torneo.');
         }
 
-        JugadorEnTorneo::create([
-            'torneo_id' => $torneoId,
-            'user_id' => $userId,
-        ]);
-
-        return response()->json(['message' => 'Listo para el torneo'], 201);
-
-    } catch (\Exception $e) {
-        return response()->json(['message' => 'Error en el servidor', 'error' => $e->getMessage()], 500);
+        // Retornar una vista con la info del jugador en el torneo
+        return view('jugador-en-torneo.show', compact('jugador'));
     }
-}
+
+
 
 }

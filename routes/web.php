@@ -32,6 +32,11 @@ Route::middleware('auth')->post('/torneos/{torneo}/preparado', [JugadorEnTorneoC
 
 Route::get('/jugador-en-torneo/{torneo}', [JugadorEnTorneoController::class, 'show'])->name('jugadorEnTorneo.show');
 
+Route::get('/torneos/{torneo}/unirse', [JugadorEnTorneoController::class, 'showFormularioUnirse'])
+    ->name('jugadorEnTorneo.formularioUnirse')
+    ->middleware('auth');
+
+
 Route::resource("estadisticas", EstadisticasController::class)
 ->middleware('auth');
 

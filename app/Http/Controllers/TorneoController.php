@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\EquiposUsuarios;
 use Illuminate\Http\Request;
 use App\Models\Torneos;
 use App\Models\Calendario;
@@ -47,7 +48,11 @@ class TorneoController extends Controller
     public function show(string $id)
     {
         $torneo = Torneos::findOrFail($id);
-        return view('torneos.show', compact('torneo'));
+    $userId = auth()->id();
+
+    $equipos = EquiposUsuarios::where('idUsuario', $userId)->pluck('idEquipo');
+
+    return view('torneos.show', compact('torneo', 'equipos'));
     }
 
     public function estado($id)

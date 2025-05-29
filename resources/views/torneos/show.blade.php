@@ -1,17 +1,34 @@
 <x-layouts.layout>
+    @if (session('mensaje'))
+    <script>
+        alert(@json(session('mensaje')));
+    </script>
+    @endif
+
     <div class="w-200v h-65v rounded-xl bg-rojoClaro overflow-y-auto p-2 shadow-md text-acentuar1 scrollbar-hide flex flex-col items-center justify-start space-y-4">
         <div class="w-175v rounded-xl bg-white p-4 shadow-md text-black scrollbar-hide flex flex-col space-y-4">
             @if(auth()->id() === $torneo->organizador)
                 <form action="{{ route('torneos.iniciar', $torneo->id) }}" method="POST">
-                @csrf
+                    @csrf
                     <button type="submit" class="btn btn-primary">Iniciar torneo</button>
                 </form>
             @endif
+
             <div id="estado-torneo-container">
                 <p id="estado-torneo">Estado actual: {{ $torneo->estado }}</p>
 
                 @if($torneo->estado === 'inactivo')
-                    <button id="btn-preparado" class="btn btn-primary">Preparado</button>
+                    <form method="POST" action="{{ route('torneos.preparado', $torneo->id) }}">
+                        @csrf
+                        <label for="equipo_id">Selecciona tu equipo:</label>
+                        <select name="equipo_id" id="equipo_id" required class="form-select mb-2">
+                            <option value="" disabled selected>-- Elige un equipo --</option>
+                            @foreach ($equipos as $equipo)
+                                <option value="{{ $equipo }}">{{ $equipo }}</option>
+                            @endforeach
+                        </select>
+                        <button type="submit" class="btn btn-primary">Preparado</button>
+                    </form>
                 @elseif($torneo->estado === 'activo')
                     <button id="btn-unirse" class="btn btn-success">Unirse</button>
                 @endif
@@ -25,44 +42,36 @@
                     container.innerHTML = `
                         <p id="estado-torneo">Estado actual: ${estado}</p>
                         ${
-                            estado === 'inactivo' ? 
-                            `<button id="btn-preparado" class="btn btn-primary">Preparado</button>` : 
-                            estado === 'activo' ? 
-                            `<button id="btn-unirse" class="btn btn-success">Unirse</button>` : ''
+                            estado === 'inactivo' ? `
+                                <form method="POST" action="/torneos/${torneoId}/preparado">
+                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                    <label for="equipo_id">Selecciona tu equipo:</label>
+                                    <select name="equipo_id" id="equipo_id" required class="form-select mb-2">
+                                        <option value="" disabled selected>-- Elige un equipo --</option>
+                                        @foreach ($equipos as $equipo)
+                                            <option value="{{ $equipo }}">{{ $equipo }}</option>
+                                        @endforeach
+                                    </select>
+                                    <button type="submit" class="btn btn-primary">Preparado</button>
+                                </form>
+                            ` : estado === 'activo' ? `
+                                <button id="btn-unirse" class="btn btn-success">Unirse</button>
+                            ` : ''
                         }
                     `;
-
-                    const btnPreparado = document.getElementById('btn-preparado');
-                    if (btnPreparado) {
-                        btnPreparado.addEventListener('click', () => {
-                            fetch(`/torneos/${torneoId}/preparado`, {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                                },
-                                body: JSON.stringify({})
-                            })
-                            .then(response => response.json())
-                            .then(data => {
-    alert(data.message + (data.error ? "\nDetalles: " + data.error : ""));
-})
-
-                        });
-                    }
 
                     const btnUnirse = document.getElementById('btn-unirse');
                     if (btnUnirse) {
                         btnUnirse.addEventListener('click', () => {
-                            // Redirigir a la vista show de jugador en torneo
                             window.location.href = `/jugador-en-torneo/${torneoId}`;
                         });
                     }
                 }
 
-                // Inicializa con el estado que llega desde blade
+                // Inicializa con el estado desde Blade
                 renderEstadoBoton("{{ $torneo->estado }}");
 
+                // Actualiza cada 60s
                 setInterval(() => {
                     fetch(`/torneos/${torneoId}/estado`)
                         .then(res => res.json())
