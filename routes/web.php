@@ -8,6 +8,7 @@ use App\Http\Controllers\InscripcionesController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\EstadisticasController;
 use App\Http\Controllers\JugadorEnTorneoController;
+use App\Http\Controllers\ModuloController;
 use Illuminate\Support\Facades\Route;
 
 // Route::view("/","home")->name("home");
@@ -37,6 +38,8 @@ Route::get('/torneos/{torneo}/unirse', [JugadorEnTorneoController::class, 'showF
     ->middleware('auth');
 
 Route::post('/modulo/{modulo}/enlace', [ModuloController::class, 'updateLink'])->name('modulos.updateLink');
+
+Route::get('/modulos/{modulo}/comprobar', [ModuloController::class, 'comprobarEstadoModulo'])->name('modulos.comprobarEstado');
 
 Route::resource("estadisticas", EstadisticasController::class)
 ->middleware('auth');

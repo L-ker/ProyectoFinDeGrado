@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\EquiposUsuarios;
 use Illuminate\Http\Request;
 use App\Models\Torneos;
+use App\Models\JugadorEnTorneo;
+use App\Models\Modulo;
 use App\Models\Calendario;
 
 class TorneoController extends Controller
@@ -76,7 +78,7 @@ class TorneoController extends Controller
             return back()->with('mensaje', 'Necesitas al menos 2 jugadores para iniciar el torneo.');
         }
 
-        $this->generarBracket($torneo, $jugadores);
+        $this->generarBrackets($torneo, $jugadores);
 
         return redirect()->back()->with('success', 'Torneo iniciado.');
     }

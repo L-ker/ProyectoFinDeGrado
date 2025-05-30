@@ -32,8 +32,15 @@ class TorneosSeeder extends Seeder
             'nombre' => 'test3',
         ]);
 
+        $torneo4 = Torneos::create([
+            'organizador' => 1,
+            'modalidad' => 'VGC',
+            'nombre' => 'test3',
+        ]);
+
         Calendario::crearConFecha($torneo1->id, '29/05/2025');
         Calendario::crearConFecha($torneo2->id, '5/06/2025');
         Calendario::crearConFecha($torneo3->id, '13/06/2025');
+        Calendario::crearConFecha($torneo4->id, '30/05/2025');
     }
 }

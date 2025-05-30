@@ -19,7 +19,7 @@ class UsuariosSeeder extends Seeder
         ]);
 
         User::create([
-            'name' => 'Organizador',
+            'name' => 'testTFG1',
             'email' => 'organizador@gmail.com',
             'password' => Hash::make('12345678'),
             'es_administrador' => false,
@@ -27,13 +27,13 @@ class UsuariosSeeder extends Seeder
         ]);
 
         User::create([
-            'name' => 'lucas',
+            'name' => 'testTFG2',
             'email' => 'l@gmail.com',
             'password' => Hash::make('12345678'),
         ]);
 
         User::create([
-            'name' => 'ale',
+            'name' => 'testTFG',
             'email' => 'a@gmail.com',
             'password' => Hash::make('12345678'),
         ]);

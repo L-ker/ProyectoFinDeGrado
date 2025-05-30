@@ -22,7 +22,7 @@ class Modulo extends Model
         "user2_id",
         "ganador_id",
         "modulo_hijo1_id",
-        "modulo_hijo2_id"
+        "modulo_hijo2_id",
     ];
 
     public function modulo1()
