@@ -65,7 +65,7 @@ class PokemonSeeder extends Seeder
             'movimiento2'      => 'agility',
             'movimiento3'      => 'bite',
             'movimiento4'      => 'charm',
-            'sprite'           => 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/906.png',
+            'sprite'           => 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/192.png',
         ]);
 
         Pokemon::create([
@@ -76,7 +76,7 @@ class PokemonSeeder extends Seeder
             'movimiento2'      => 'agility',
             'movimiento3'      => 'bite',
             'movimiento4'      => 'charm',
-            'sprite'           => 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/906.png',
+            'sprite'           => 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/923.png',
         ]);
 
 
