@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Torneos;
 use App\Models\Modulo;
+use App\Models\User;
 use App\Models\JugadorEnTorneo;
 
 class JugadorEnTorneoController extends Controller
@@ -107,7 +108,12 @@ class JugadorEnTorneoController extends Controller
 
             if ($todosOcupados && $ronda == $rondaMaxima) {
                 $torneo->ganador = $modulo->ganador_id;
+                $torneo->estado = "cerrado";
                 $torneo->save();
+
+                if ($torneo->ganador) {
+                    $torneo->ganador = User::find($torneo->ganador);
+                }
             } else if ($todosOcupados) {
                 foreach ($modulosRonda as $modulo) {
                     $torneo = Torneos::find($torneoId);

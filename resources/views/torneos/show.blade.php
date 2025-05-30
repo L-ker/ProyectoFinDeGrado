@@ -5,8 +5,8 @@
     </script>
     @endif
 
-    <div class="w-200v h-65v rounded-xl bg-rojoClaro overflow-y-auto p-2 shadow-md text-acentuar1 scrollbar-hide flex flex-col items-center justify-start space-y-4">
-        <div class="w-175v rounded-xl bg-white p-4 shadow-md text-black scrollbar-hide flex flex-col space-y-4">
+    <div class="w-200v h-65v rounded-xl bg-rojoClaro p-2 shadow-md text-acentuar1 scrollbar-hide flex flex-col items-center justify-center space-y-4">
+        <div class="w-80v h-25v rounded-xl bg-white p-4 shadow-md text-black scrollbar-hide flex flex-col space-y-4">
             @if(auth()->id() === $torneo->organizador)
                 <form action="{{ route('torneos.iniciar', $torneo->id) }}" method="POST">
                     @csrf
@@ -40,6 +40,8 @@
                                 </form>
                             ` : estado === 'activo' ? `
                                 <button id="btn-unirse" class="btn btn-success">Unirse</button>
+                            ` : estado === 'cerrado' ? `
+                                <p class="text-gray-600 font-semibold">El torneo está cerrado.</p>
                             ` : ''
                         }
                     `;

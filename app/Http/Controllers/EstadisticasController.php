@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use App\Models\Torneos;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -14,7 +15,9 @@ class EstadisticasController extends Controller
      */
     public function index()
     {    
-        return view('estadisticas.index');
+        $userId = auth()->id();
+        $torneosGanados = Torneos::where('ganador', $userId)->count();
+        return view('estadisticas.index', compact('torneosGanados'));
     }
     
 

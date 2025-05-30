@@ -3,9 +3,9 @@
         <div class="w-175v rounded-xl bg-white p-4 shadow-md text-black scrollbar-hide flex flex-col space-y-4">
             @if($torneo->ganador) 
                 <h2 class="text-2xl font-bold mb-4 text-center">¡Torneo Finalizado!</h2>
-    <p class="text-center text-lg">
-        El ganador del torneo es: <strong>{{ $torneo->ganador->name ?? 'Usuario eliminado' }}</strong>
-    </p>
+                <p class="text-center text-lg">
+                    El ganador del torneo es: <strong>{{ $torneo->ganador->name ?? 'Usuario eliminado' }}</strong>
+                </p>
             @else
                 @if (auth()->id() === $torneo->organizador)
                     {{-- Vista para el organizador --}}
