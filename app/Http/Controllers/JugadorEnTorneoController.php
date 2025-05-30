@@ -106,7 +106,7 @@ class JugadorEnTorneoController extends Controller
                 }
             }
 
-            if ($todosOcupados && $ronda == $rondaMaxima) {
+            if ($todosOcupados && $ronda == $rondaMaxima && $modulo->ganador_id) {
                 $torneo->ganador = $modulo->ganador_id;
                 $torneo->estado = "cerrado";
                 $torneo->save();

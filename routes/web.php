@@ -20,26 +20,26 @@ Route::resource("equipos", EquiposController::class)
 Route::resource("users", UsersController::class)
 ->middleware('auth');
 
-Route::post('/users/{id}/hacer-organizador', [UsersController::class, 'hacerOrganizador'])->name('users.hacerOrganizador');
+Route::post('/users/{id}/hacer-organizador', [UsersController::class, 'hacerOrganizador'])->name('users.hacerOrganizador')->middleware('auth');
 
 Route::get('/inscripciones/store/{torneo}', [InscripcionesController::class, 'store'])->name('inscripciones.store')->middleware('auth');
 
-Route::get('/torneos/{id}/estado', [TorneoController::class, 'estado']);
+Route::get('/torneos/{id}/estado', [TorneoController::class, 'estado'])->middleware('auth');
 
-Route::post('/torneos/{id}/iniciar', [TorneoController::class, 'iniciar'])->name('torneos.iniciar');
+Route::post('/torneos/{id}/iniciar', [TorneoController::class, 'iniciar'])->name('torneos.iniciar')->middleware('auth');
 
 Route::middleware('auth')->post('/torneos/{torneo}/preparado', [JugadorEnTorneoController::class, 'marcarPreparado'])
     ->name('torneos.preparado');
 
-Route::get('/jugador-en-torneo/{torneo}', [JugadorEnTorneoController::class, 'show'])->name('jugadorEnTorneo.show');
+Route::get('/jugador-en-torneo/{torneo}', [JugadorEnTorneoController::class, 'show'])->name('jugadorEnTorneo.show')->middleware('auth');
 
 Route::get('/torneos/{torneo}/unirse', [JugadorEnTorneoController::class, 'showFormularioUnirse'])
     ->name('jugadorEnTorneo.formularioUnirse')
     ->middleware('auth');
 
-Route::post('/modulo/{modulo}/enlace', [ModuloController::class, 'updateLink'])->name('modulos.updateLink');
+Route::post('/modulo/{modulo}/enlace', [ModuloController::class, 'updateLink'])->name('modulos.updateLink')->middleware('auth');
 
-Route::get('/modulos/{modulo}/comprobar', [ModuloController::class, 'comprobarEstadoModulo'])->name('modulos.comprobarEstado');
+Route::get('/modulos/{modulo}/comprobar', [ModuloController::class, 'comprobarEstadoModulo'])->name('modulos.comprobarEstado')->middleware('auth');
 
 Route::resource("estadisticas", EstadisticasController::class)
 ->middleware('auth');
